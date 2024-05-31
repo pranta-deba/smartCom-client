@@ -12,20 +12,35 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import './css/Navbasr.css'; 3
+import './css/Navbasr.css';
 
 
 
-const pages = [
+const withOutLogin = [
     { name: 'Home', to: '/' },
     { name: 'Join as Employee', to: '/join_employee' },
-    { name: ' Join as HR Manager', to: '/join_hr' },
+    { name: 'Join as HR Manager', to: '/join_hr' },
 ]
+// const employee = [
+//     { name: 'Home', to: '/' },
+//     { name: 'My Assets', to: '/my_assets' },
+//     { name: 'Request for an Asset', to: '/request_assets' },
+//     { name: 'Profile', to: '/profile' },
+// ]
+// const hr = [
+//     { name: 'Home', to: '/' },
+//     { name: 'Asset List', to: '/join_employee' },
+//     { name: 'Add an Asset', to: '/join_hr' },
+//     { name: 'All Requests', to: '/join_hr' },
+//     { name: 'Custom Requests List', to: '/join_hr' },
+//     { name: 'My Employee List', to: '/join_hr' },
+//     { name: 'Add an Employee', to: '/join_hr' },
+// ]
 
 const settings = [
     { name: 'Profile', to: '/profile' },
     { name: 'Account', to: '/account' },
-    { name: 'Dashboard', to: '/dashboard' },
+    { name: 'Logout', to: '/logout' },
 ]
 
 
@@ -96,7 +111,7 @@ const Navbar = () => {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {pages.map((page) => (
+                            {withOutLogin.map((page) => (
                                 <MenuItem key={page.name} onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">
                                         <NavLink to={page.to} className='cursor-pointer'>{page.name}</NavLink>
@@ -122,7 +137,7 @@ const Navbar = () => {
                         <Link to={"/"}>SmartCom.</Link>
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
+                        {withOutLogin.map((page) => (
                             <Button
                                 key={page.name}
                                 onClick={handleCloseNavMenu}
@@ -137,7 +152,7 @@ const Navbar = () => {
                         <Button variant="contained" className='!bg-secondaryColor'>
                             <NavLink to={'/login'}>Login</NavLink>
                         </Button>
-                        <Tooltip title="Open settings">
+                        <Tooltip title="Open settings" className='!hidden'>
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                 <Avatar alt="Remy Sharp" src="https://e7.pngegg.com/pngimages/348/800/png-clipart-man-wearing-blue-shirt-illustration-computer-icons-avatar-user-login-avatar-blue-child.png" />
                             </IconButton>
