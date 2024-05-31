@@ -65,7 +65,7 @@ const Navbar = () => {
     };
 
     return (
-        <AppBar position="static" className='!bg-primaryColor'>
+        <AppBar position="static" className='!bg-primaryColor !shadow-lg'>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Typography
