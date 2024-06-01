@@ -43,7 +43,7 @@ const useAboutData = () => {
     const packages = [
         {
             'type': "Basic",
-            'employees': 8,
+            'employees': 5,
             'amount': 5,
             'limitation': "Limited",
             'db': '5 Databases',
@@ -51,7 +51,7 @@ const useAboutData = () => {
         },
         {
             'type': "Pro",
-            'employees': 10,
+            'employees': 8,
             'amount': 8,
             'limitation': "Limited",
             'db': '10 Databases',

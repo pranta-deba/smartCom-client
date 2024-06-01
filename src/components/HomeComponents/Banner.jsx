@@ -5,6 +5,7 @@ import banner from '../../assets/banner.svg'
 import banner2 from '../../assets/banner2.svg'
 import { Button } from '@mui/material';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import { Link } from 'react-router-dom';
 
 
 const Banner = () => {
@@ -33,7 +34,7 @@ const Banner = () => {
                             </div>
                             <div className='hidden md:flex'>
                                 <Button variant="contained" size="large" className='!bg-secondaryColor'>
-                                    Join as HR Manager
+                                    <Link to={"/join_hr"}>Join as HR Manager</Link>
                                 </Button>
                             </div>
                         </div>

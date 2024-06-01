@@ -17,14 +17,6 @@ import Login from '../Modals/Login';
 import useAuth from '../../hooks/useAuth';
 import NavLoader from '../Spinner/NavLoader';
 
-
-
-const withOutLogin = [
-    { name: 'Home', to: '/' },
-    { name: 'Join as Employee', to: '/join_employee' },
-    { name: 'Join as HR Manager', to: '/join_hr' },
-]
-
 const Navbar = () => {
     const { user, userLoader, logOut } = useAuth()
     const [anchorElNav, setAnchorElNav] = useState(null);
@@ -96,13 +88,22 @@ const Navbar = () => {
                                     display: { xs: 'block', md: 'none' },
                                 }}
                             >
-                                {withOutLogin.map((page) => (
-                                    <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                                        <Typography textAlign="center">
-                                            <NavLink to={page.to} className='cursor-pointer'>{page.name}</NavLink>
-                                        </Typography>
-                                    </MenuItem>
-                                ))}
+
+                                <MenuItem onClick={handleCloseNavMenu}>
+                                    <Typography textAlign="center">
+                                        <NavLink to={'/'} className='cursor-pointer'>Home</NavLink>
+                                    </Typography>
+                                </MenuItem>
+                                <MenuItem onClick={handleCloseNavMenu}>
+                                    <Typography textAlign="center">
+                                        <NavLink to={'/join_employee'} className='cursor-pointer'>Join as Employee</NavLink>
+                                    </Typography>
+                                </MenuItem>
+                                <MenuItem onClick={handleCloseNavMenu}>
+                                    <Typography textAlign="center">
+                                        <NavLink to={'/join_hr'} className='cursor-pointer'>Join as HR Manager</NavLink>
+                                    </Typography>
+                                </MenuItem>
                             </Menu>
                         </Box>
                         <Typography
@@ -122,15 +123,24 @@ const Navbar = () => {
                             <Link to={"/"}>SmartCom.</Link>
                         </Typography>
                         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                            {withOutLogin.map((page) => (
-                                <Button
-                                    key={page.name}
-                                    onClick={handleCloseNavMenu}
-                                    sx={{ my: 2, color: 'white', display: 'block' }}
-                                >
-                                    <NavLink to={page.to} className='cursor-pointer'>{page.name}</NavLink>
-                                </Button>
-                            ))}
+                            <Button
+                                onClick={handleCloseNavMenu}
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                            >
+                                <NavLink to={'/'} className='cursor-pointer'>Home</NavLink>
+                            </Button>
+                            <Button
+                                onClick={handleCloseNavMenu}
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                            >
+                                <NavLink to={'/join_employee'} className='cursor-pointer'>Join as Employee</NavLink>
+                            </Button>
+                            <Button
+                                onClick={handleCloseNavMenu}
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                            >
+                                <NavLink to={'/join_hr'} className='cursor-pointer'>Join as HR Manager</NavLink>
+                            </Button>
                         </Box>
 
                         <Box sx={{ flexGrow: 0 }}>

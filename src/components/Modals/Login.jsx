@@ -1,11 +1,10 @@
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react'
-import { Box, Button, TextField } from '@mui/material';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { Button } from '@mui/material';
 import { useState } from 'react'
 import { Fragment } from 'react'
 import { FcGoogle } from "react-icons/fc";
 import useAuth from '../../hooks/useAuth';
+import { InputPass, InputText } from '../Input/Input';
 
 
 
@@ -13,15 +12,12 @@ const Login = () => {
     const { googleLogin } = useAuth();
 
     const [isOpen, setIsOpen] = useState(false)
-    const [showPassword, setShowPassword] = useState(false);
     const open = () => {
         setIsOpen(true)
     }
     const close = () => {
         setIsOpen(false)
     }
-
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleLogin = (event) => {
         event.preventDefault();
         const email = event.target.email.value;
@@ -74,90 +70,11 @@ const Login = () => {
                                     </div>
                                     <form onSubmit={handleLogin}>
                                         <div className='flex flex-col justify-center gap-2'>
-                                            <Box
-                                                sx={{
-                                                    width: 500,
-                                                    maxWidth: '100%',
-                                                }}
-                                            >
-                                                <TextField
-                                                    fullWidth
-                                                    label="Email"
-                                                    name='email'
-                                                    variant="outlined"
-                                                    sx={{
-                                                        '& .MuiOutlinedInput-root': {
-                                                            '& fieldset': {
-                                                                borderColor: 'white',
-                                                            },
-                                                            '&:hover fieldset': {
-                                                                borderColor: 'white',
-                                                            },
-                                                            '&.Mui-focused fieldset': {
-                                                                borderColor: 'white',
-                                                            },
-                                                            '& .MuiInputBase-input': {
-                                                                color: 'white',
-                                                            },
-                                                        },
-                                                        '& .MuiInputLabel-root': {
-                                                            color: 'white',
-                                                        },
-                                                        '& .MuiInputLabel-root.Mui-focused': {
-                                                            color: 'white',
-                                                        },
-                                                    }}
-                                                    className='!text-White'
-                                                    required
-                                                />
-                                            </Box>
+                                            <InputText type='email' label='Email' name='email' />
                                             <div className='w-full text-White'>
                                                 <p className='text-end cursor-pointer underline'>Forgot Password</p>
                                             </div>
-                                            <Box
-                                                sx={{
-                                                    width: 500,
-                                                    maxWidth: '100%',
-                                                }}
-                                            >
-                                                <div className='relative'>
-                                                    <TextField
-                                                        fullWidth
-                                                        id="outlined-basic"
-                                                        label="Password"
-                                                        name='password'
-                                                        type={showPassword ? 'text' : 'password'}
-                                                        variant="outlined"
-                                                        sx={{
-                                                            '& .MuiOutlinedInput-root': {
-                                                                '& fieldset': {
-                                                                    borderColor: 'white',
-                                                                },
-                                                                '&:hover fieldset': {
-                                                                    borderColor: 'white',
-                                                                },
-                                                                '&.Mui-focused fieldset': {
-                                                                    borderColor: 'white',
-                                                                },
-                                                                '& .MuiInputBase-input': {
-                                                                    color: 'white',
-                                                                },
-                                                            },
-                                                            '& .MuiInputLabel-root': {
-                                                                color: 'white',
-                                                            },
-                                                            '& .MuiInputLabel-root.Mui-focused': {
-                                                                color: 'white',
-                                                            },
-                                                        }}
-                                                        className='!text-White'
-                                                        required
-                                                    />
-                                                    <div onClick={handleClickShowPassword} className='absolute top-4 right-3 text-White cursor-pointer'>
-                                                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                                                    </div>
-                                                </div>
-                                            </Box>
+                                            <InputPass name='password' label='Password' type='password' />
                                             <div className='mt-3'>
                                                 <Button type='submit' className='!py-2 !bg-secondaryColor' variant="contained" fullWidth>Sign In</Button>
                                             </div>
