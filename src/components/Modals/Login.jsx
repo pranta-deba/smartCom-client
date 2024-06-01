@@ -32,7 +32,7 @@ const Login = () => {
         try {
             const res = await googleLogin();
             if (res.user) {
-                console.log(res.user);
+                setIsOpen(false)
             }
         } catch (error) {
             console.log(error.message);

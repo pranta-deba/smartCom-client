@@ -24,31 +24,9 @@ const withOutLogin = [
     { name: 'Join as Employee', to: '/join_employee' },
     { name: 'Join as HR Manager', to: '/join_hr' },
 ]
-// const employee = [
-//     { name: 'Home', to: '/' },
-//     { name: 'My Assets', to: '/my_assets' },
-//     { name: 'Request for an Asset', to: '/request_assets' },
-//     { name: 'Profile', to: '/profile' },
-// ]
-// const hr = [
-//     { name: 'Home', to: '/' },
-//     { name: 'Asset List', to: '/join_employee' },
-//     { name: 'Add an Asset', to: '/join_hr' },
-//     { name: 'All Requests', to: '/join_hr' },
-//     { name: 'Custom Requests List', to: '/join_hr' },
-//     { name: 'My Employee List', to: '/join_hr' },
-//     { name: 'Add an Employee', to: '/join_hr' },
-// ]
-
-const settings = [
-    { name: 'Profile', to: '/profile' },
-    { name: 'Account', to: '/account' },
-    { name: 'Logout', to: '/logout' },
-]
-
 
 const Navbar = () => {
-    const { user, userLoader } = useAuth()
+    const { user, userLoader, logOut } = useAuth()
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -185,13 +163,19 @@ const Navbar = () => {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                {settings.map((setting) => (
-                                    <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
-                                        <Typography textAlign="center">
-                                            <NavLink to={setting.to}>{setting.name}</NavLink>
-                                        </Typography>
-                                    </MenuItem>
-                                ))}
+
+                                <MenuItem onClick={handleCloseUserMenu}>
+                                    <Typography textAlign="center">
+                                        <NavLink to={'/profile'}>Profile</NavLink>
+                                    </Typography>
+                                </MenuItem>
+                                <MenuItem onClick={handleCloseUserMenu}>
+                                    <Typography onClick={() => {
+                                        logOut()
+                                    }} textAlign="center">
+                                        Logout
+                                    </Typography>
+                                </MenuItem>
                             </Menu>
                         </Box>
                     </Toolbar>
