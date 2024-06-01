@@ -13,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import './css/Navbasr.css';
+import Login from '../Modals/Login';
 
 
 
@@ -149,9 +150,11 @@ const Navbar = () => {
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
-                        <Button variant="contained" className='!bg-secondaryColor'>
-                            <NavLink to={'/login'}>Login</NavLink>
-                        </Button>
+                        {/* login */}
+                        <div className='space-x-2'>
+                            <Login />
+                        </div>
+
                         <Tooltip title="Open settings" className='!hidden'>
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                 <Avatar alt="Remy Sharp" src="https://e7.pngegg.com/pngimages/348/800/png-clipart-man-wearing-blue-shirt-illustration-computer-icons-avatar-user-login-avatar-blue-child.png" />
