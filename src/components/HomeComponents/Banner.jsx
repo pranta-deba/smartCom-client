@@ -46,12 +46,12 @@ const Banner = () => {
                             <p className='text-xs md:text-lg'>Voluptatem ipsa quae ab illo inventore veritatis et <br /> quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia.</p>
                             <div className='flex md:hidden'>
                                 <Button variant="contained" size="small" className='!bg-secondaryColor'>
-                                    Join as HR Manager
+                                    Join as an Employee
                                 </Button>
                             </div>
                             <div className='hidden md:flex'>
                                 <Button variant="contained" size="large" className='!bg-secondaryColor'>
-                                    Join as HR Manager
+                                    Join as an Employee
                                 </Button>
                             </div>
                         </div>
