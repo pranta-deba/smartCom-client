@@ -5,10 +5,13 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useState } from 'react'
 import { Fragment } from 'react'
 import { FcGoogle } from "react-icons/fc";
+import useAuth from '../../hooks/useAuth';
 
 
 
 const Login = () => {
+    const { googleLogin } = useAuth();
+
     const [isOpen, setIsOpen] = useState(false)
     const [showPassword, setShowPassword] = useState(false);
     const open = () => {
@@ -17,7 +20,7 @@ const Login = () => {
     const close = () => {
         setIsOpen(false)
     }
-    
+
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleLogin = (event) => {
         event.preventDefault();
@@ -25,8 +28,15 @@ const Login = () => {
         const password = event.target.password.value;
         console.log({ email: email, password: password });
     };
-    const handleGoogleLogin = () => {
-
+    const handleGoogleLogin = async () => {
+        try {
+            const res = await googleLogin();
+            if (res.user) {
+                console.log(res.user);
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
     };
     return (
         <>

@@ -14,6 +14,8 @@ import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import './css/Navbasr.css';
 import Login from '../Modals/Login';
+import useAuth from '../../hooks/useAuth';
+import NavLoader from '../Spinner/NavLoader';
 
 
 
@@ -46,6 +48,7 @@ const settings = [
 
 
 const Navbar = () => {
+    const { user, userLoader } = useAuth()
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -65,129 +68,136 @@ const Navbar = () => {
         setAnchorElUser(null);
     };
 
+    if (userLoader) return <NavLoader />
+
     return (
-        <AppBar position="static" className='!bg-primaryColor !shadow-lg'>
-            <Container maxWidth="xl">
-                <Toolbar disableGutters>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            fontWeight: 700,
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        <Link to={"/"}>SmartCom.</Link>
-                    </Typography>
-
-                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-                        <IconButton
-                            size="large"
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleOpenNavMenu}
-                            color="inherit"
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                        <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorElNav}
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                            }}
-                            open={Boolean(anchorElNav)}
-                            onClose={handleCloseNavMenu}
+        <>
+            <AppBar position="static" className='!bg-primaryColor !shadow-lg'>
+                <Container maxWidth="xl">
+                    <Toolbar disableGutters>
+                        <Typography
+                            variant="h6"
+                            noWrap
                             sx={{
-                                display: { xs: 'block', md: 'none' },
+                                mr: 2,
+                                display: { xs: 'none', md: 'flex' },
+                                fontWeight: 700,
+                                color: 'inherit',
+                                textDecoration: 'none',
                             }}
                         >
-                            {withOutLogin.map((page) => (
-                                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">
-                                        <NavLink to={page.to} className='cursor-pointer'>{page.name}</NavLink>
-                                    </Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
-                    </Box>
-                    <Typography
-                        variant="h5"
-                        noWrap
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'flex', md: 'none' },
-                            flexGrow: 1,
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        <Link to={"/"}>SmartCom.</Link>
-                    </Typography>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {withOutLogin.map((page) => (
-                            <Button
-                                key={page.name}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
+                            <Link to={"/"}>SmartCom.</Link>
+                        </Typography>
+
+                        <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                            <IconButton
+                                size="large"
+                                aria-label="account of current user"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                onClick={handleOpenNavMenu}
+                                color="inherit"
                             >
-                                <NavLink to={page.to} className='cursor-pointer'>{page.name}</NavLink>
-                            </Button>
-                        ))}
-                    </Box>
-
-                    <Box sx={{ flexGrow: 0 }}>
-                        {/* login */}
-                        <div className='space-x-2'>
-                            <Login />
-                        </div>
-
-                        <Tooltip title="Open settings" className='!hidden'>
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="https://e7.pngegg.com/pngimages/348/800/png-clipart-man-wearing-blue-shirt-illustration-computer-icons-avatar-user-login-avatar-blue-child.png" />
+                                <MenuIcon />
                             </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{ mt: '45px' }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
+                            <Menu
+                                id="menu-appbar"
+                                anchorEl={anchorElNav}
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'left',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'left',
+                                }}
+                                open={Boolean(anchorElNav)}
+                                onClose={handleCloseNavMenu}
+                                sx={{
+                                    display: { xs: 'block', md: 'none' },
+                                }}
+                            >
+                                {withOutLogin.map((page) => (
+                                    <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                                        <Typography textAlign="center">
+                                            <NavLink to={page.to} className='cursor-pointer'>{page.name}</NavLink>
+                                        </Typography>
+                                    </MenuItem>
+                                ))}
+                            </Menu>
+                        </Box>
+                        <Typography
+                            variant="h5"
+                            noWrap
+                            sx={{
+                                mr: 2,
+                                display: { xs: 'flex', md: 'none' },
+                                flexGrow: 1,
+                                fontFamily: 'monospace',
+                                fontWeight: 700,
+                                letterSpacing: '.3rem',
+                                color: 'inherit',
+                                textDecoration: 'none',
                             }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">
-                                        <NavLink to={setting.to}>{setting.name}</NavLink>
-                                    </Typography>
-                                </MenuItem>
+                            <Link to={"/"}>SmartCom.</Link>
+                        </Typography>
+                        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                            {withOutLogin.map((page) => (
+                                <Button
+                                    key={page.name}
+                                    onClick={handleCloseNavMenu}
+                                    sx={{ my: 2, color: 'white', display: 'block' }}
+                                >
+                                    <NavLink to={page.to} className='cursor-pointer'>{page.name}</NavLink>
+                                </Button>
                             ))}
-                        </Menu>
-                    </Box>
-                </Toolbar>
-            </Container>
-        </AppBar>
+                        </Box>
+
+                        <Box sx={{ flexGrow: 0 }}>
+                            <>
+                                {/* login button */}
+                                {!user && <div className='space-x-2'>
+                                    <Login />
+                                </div>}
+                                {/* user profile */}
+                                {user && <Tooltip title={user?.displayName}>
+                                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                        {user?.photoURL ? <Avatar src={user?.photoURL} /> :
+                                            <Avatar alt={user?.displayName} src={"https://i.ibb.co/bj4Wj2F/images.png"} />}
+                                    </IconButton>
+                                </Tooltip>}
+                            </>
+                            <Menu
+                                sx={{ mt: '45px' }}
+                                id="menu-appbar"
+                                anchorEl={anchorElUser}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={Boolean(anchorElUser)}
+                                onClose={handleCloseUserMenu}
+                            >
+                                {settings.map((setting) => (
+                                    <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
+                                        <Typography textAlign="center">
+                                            <NavLink to={setting.to}>{setting.name}</NavLink>
+                                        </Typography>
+                                    </MenuItem>
+                                ))}
+                            </Menu>
+                        </Box>
+                    </Toolbar>
+                </Container>
+            </AppBar>
+        </>
     );
 };
 
