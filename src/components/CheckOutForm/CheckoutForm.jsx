@@ -5,13 +5,19 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { imageUpload } from '../../api/utils';
+import useAuth from '../../hooks/useAuth';
+import { useNavigate } from 'react-router-dom'
+import Loader from '../Spinner/Loader';
 
-const CheckoutForm = ({ selectRate, hrInfo }) => {
+const CheckoutForm = ({ selectRate, hrInfo, setIsOpen, setHrInfo }) => {
+    const { createUser } = useAuth()
     const stripe = useStripe();
     const elements = useElements();
     const [clientSecret, setClientSecret] = useState();
     const [processing, setProcessing] = useState(false);
     const [cardError, setCardError] = useState('')
+    const navigate = useNavigate();
+
     useEffect(() => {
         if (selectRate && selectRate > 1) {
             getClientSecret({ price: selectRate })
@@ -75,26 +81,31 @@ const CheckoutForm = ({ selectRate, hrInfo }) => {
             const expiration = new Date(now);
             expiration.setDate(now.getDate() + 30);
 
-
             try {
                 // host logo 
                 const image_url = await imageUpload(hrInfo.company_logo);
-                console.log(image_url);
 
+                // add user in db
+                const { data } = await axios.post(`${import.meta.env.VITE_Base_URL}/add-hr`, {
+                    full_name: hrInfo.full_name,
+                    company_name: hrInfo.company_name,
+                    hr_email: hrInfo.hr_email,
+                    company_logo: image_url,
+                    date_of_birth: hrInfo.date_of_birth,
+                    packages_rate: hrInfo.packages_rate,
+                    members: hrInfo.members,
+                    purchase_date: now,
+                    expiration_date: expiration,
+                    transactionId: paymentIntent.id
+                })
+                if (data.insertedId) {
+                    // firebase login
+                    await createUser(hrInfo.hr_email, hrInfo.password);
+                    setIsOpen(false);
+                    setHrInfo({});
+                    navigate('/');
+                }
 
-                // const { data } = await axios.post(`${import.meta.env.VITE_Base_URL}/create-payment-intent`, registerHRInfo);
-                // console.log(data)
-
-                // // 3. change room status to booked in db
-                // await axiosSecure.patch(`/room/status/${bookingInfo?._id}`, {
-                //     status: true,
-                // })
-
-                // update ui
-                // refetch()
-                // closeModal()
-                // toast.success('Room Booked Successfully')
-                // navigate('/dashboard/my-bookings')
             } catch (err) {
                 console.log(err)
             }
@@ -104,7 +115,7 @@ const CheckoutForm = ({ selectRate, hrInfo }) => {
 
     return (
         <>
-            {cardError && <p className='text-center text-Red'>{cardError}</p>}
+            {cardError && <p className='text-center text-Red bg-White'>{cardError}</p>}
             <form onSubmit={handleSubmit}>
                 <CardElement
                     options={{
@@ -122,7 +133,10 @@ const CheckoutForm = ({ selectRate, hrInfo }) => {
                         },
                     }}
                 />
-                <Btn type="submit" disabled={!stripe || !clientSecret || processing} text={`Pay $${selectRate}`} />
+                <div className='flex gap-2 items-center'>
+                    <Btn type="submit" disabled={!stripe || !clientSecret || processing} text={`Pay $${selectRate}`} />
+                    {processing && <Loader />}
+                </div>
             </form>
         </>
     );
@@ -131,6 +145,8 @@ const CheckoutForm = ({ selectRate, hrInfo }) => {
 CheckoutForm.propTypes = {
     selectRate: PropTypes.number.isRequired,
     hrInfo: PropTypes.object.isRequired,
+    setIsOpen: PropTypes.func,
+    setHrInfo: PropTypes.func,
 };
 
 export default CheckoutForm;

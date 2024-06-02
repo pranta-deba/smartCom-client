@@ -123,7 +123,7 @@ const JoinHR = () => {
                 </form>
             </div>
             <div>
-                <Payment selectRate={selectRate} isOpen={isOpen} setIsOpen={setIsOpen} hrInfo={hrInfo} />
+                <Payment selectRate={selectRate} isOpen={isOpen} setIsOpen={setIsOpen} hrInfo={hrInfo} setHrInfo={setHrInfo}/>
             </div>
         </div>
     );
