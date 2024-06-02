@@ -3,17 +3,42 @@ import banner from '../../assets/banner.svg'
 import { Btn, InputDate, InputFiles, InputPass, InputText } from '../../components/Input/Input';
 import { IoCheckmarkDoneCircle } from 'react-icons/io5';
 import useAboutData from '../../hooks/useAboutData';
+import Payment from '../../components/Modals/Payment';
+
 
 const JoinHR = () => {
     const [startDate, setStartDate] = useState(new Date());
     const { packages } = useAboutData();
     const [selectRate, setSelectRate] = useState(0);
+    const [isOpen, setIsOpen] = useState(false)
+    const [hrInfo, setHrInfo] = useState({})
     useEffect(() => {
         setTimeout(() => setSelectRate(15), 1000)
     }, [])
 
     const handlePackages = (rate) => {
         setSelectRate(rate);
+    }
+
+    const handleHRRequest = e => {
+        e.preventDefault();
+        const full_name = e.target.full_name.value;
+        const company_name = e.target.company_name.value;
+        const hr_email = e.target.hr_email.value;
+        const password = e.target.password.value;
+        const company_logo = e.target.logo.files[0];
+        const date_of_birth = startDate;
+        const packages_rate = selectRate;
+        let members;
+        if (packages_rate === 5) {
+            members = 5;
+        } else if (packages_rate === 8) {
+            members = 10;
+        } else if (packages_rate === 15) {
+            members = 20;
+        }
+        setHrInfo({ full_name, company_name, hr_email, password, company_logo, date_of_birth, packages_rate, members });
+        setIsOpen(true);
     }
 
     return (
@@ -67,10 +92,10 @@ const JoinHR = () => {
 
                 </div>
 
-                <form className='p-4 md:grid grid-cols-1 md:grid-cols-2 gap-3'>
+                <form onSubmit={handleHRRequest} className='p-4 md:grid grid-cols-1 md:grid-cols-2 gap-3'>
                     <div className='space-y-2'>
                         <label className='text-secondaryColor'>Name</label>
-                        <InputText type='text' name='name' label='Your Full Name' disabled={!selectRate} />
+                        <InputText type='text' name='full_name' label='Your Full Name' disabled={!selectRate} />
                     </div>
                     <div className='space-y-2'>
                         <label className='text-secondaryColor'>Company</label>
@@ -78,7 +103,7 @@ const JoinHR = () => {
                     </div>
                     <div className='space-y-2'>
                         <label className='text-secondaryColor'>Logo</label>
-                        <InputFiles disabled={!selectRate} />
+                        <InputFiles disabled={!selectRate} name='logo' />
                     </div>
                     <div className='space-y-2'>
                         <label className='text-secondaryColor'>Email</label>
@@ -93,9 +118,12 @@ const JoinHR = () => {
                         <InputDate startDate={startDate} setStartDate={setStartDate} disabled={!selectRate} />
                     </div>
                     <div className='col-span-2'>
-                        <Btn type='submit' text='Purchase ' />
+                        <Btn type='submit' text='Purchase' disabled={!selectRate} />
                     </div>
                 </form>
+            </div>
+            <div>
+                <Payment selectRate={selectRate} isOpen={isOpen} setIsOpen={setIsOpen} hrInfo={hrInfo} />
             </div>
         </div>
     );

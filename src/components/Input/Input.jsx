@@ -102,8 +102,8 @@ const InputPass = ({ name = "password", type = 'password', label = "Password", d
     )
 }
 // btn
-const Btn = ({ type = "button", text = "button", bg = "secondaryColor", color = "white", width = "auto" }) => {
-    return (<Button type={type} className={`!py-2 !bg-${bg} !text-${color} !w-${width}`} variant="contained">{text}</Button>)
+const Btn = ({ type = "button", text = "button", bg = "secondaryColor", color = "white", width = "auto", disabled = false }) => {
+    return (<Button type={type} className={`!py-2 !bg-${bg} !text-${color} !w-${width}`} variant="contained" disabled={disabled}>{text}</Button>)
 }
 // files
 const InputFiles = ({ borderColor = 'White', fileBg = 'White', fileTextColor = 'Black', name = "", disabled = false }) => {
@@ -122,7 +122,7 @@ const InputFiles = ({ borderColor = 'White', fileBg = 'White', fileTextColor = '
             </div>
             <label className="block">
                 <span className="sr-only">Choose Photo</span>
-                <input onChange={loadFile} name={name} type="file" className={`block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-${fileBg} file:text-${fileTextColor} cursor-pointer`} disabled={disabled} />
+                <input onChange={loadFile} name={name} type="file" className={`block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-${fileBg} file:text-${fileTextColor} cursor-pointer`} disabled={disabled} required />
             </label>
         </div>
     )

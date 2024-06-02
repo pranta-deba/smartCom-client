@@ -7,6 +7,7 @@ export default {
       secondaryColor: "#F7A582",
       Black: "#000000",
       White: "#ffffff",
+      Red: "#D2042D",
     },
     extend: {},
   },

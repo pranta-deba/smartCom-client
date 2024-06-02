@@ -51,7 +51,7 @@ const useAboutData = () => {
         },
         {
             'type': "Pro",
-            'employees': 8,
+            'employees': 10,
             'amount': 8,
             'limitation': "Limited",
             'db': '10 Databases',
