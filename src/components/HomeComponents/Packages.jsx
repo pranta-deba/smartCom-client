@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import useAboutData from "../../hooks/useAboutData";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 const Packages = () => {
     const { packages } = useAboutData();
@@ -38,7 +39,7 @@ const Packages = () => {
                                             </li>
                                         </ul>
                                         <Button variant="contained" disableElevation className={`!py-3 ${item?.type === 'Pro' ? "!bg-White !text-Black" : "!bg-primaryColor !text-White"}`}>
-                                            Get Started
+                                           <Link to={`/join_hr/${item?.amount}`}>Get Started</Link>
                                         </Button>
                                     </div>
                                 </div>

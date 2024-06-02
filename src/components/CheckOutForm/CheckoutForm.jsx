@@ -8,6 +8,7 @@ import { imageUpload } from '../../api/utils';
 import useAuth from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom'
 import Loader from '../Spinner/Loader';
+import toast from 'react-hot-toast';
 
 const CheckoutForm = ({ selectRate, hrInfo, setIsOpen, setHrInfo }) => {
     const { createUser } = useAuth()
@@ -37,7 +38,6 @@ const CheckoutForm = ({ selectRate, hrInfo, setIsOpen, setHrInfo }) => {
             setProcessing(false)
             return;
         }
-
         const card = elements.getElement(CardElement);
 
         if (card == null) {
@@ -52,6 +52,7 @@ const CheckoutForm = ({ selectRate, hrInfo, setIsOpen, setHrInfo }) => {
         });
 
         if (error) {
+            toast.error(error.message);
             setCardError(error.message);
             setProcessing(false)
             return;
@@ -65,13 +66,13 @@ const CheckoutForm = ({ selectRate, hrInfo, setIsOpen, setHrInfo }) => {
                 payment_method: {
                     card: card,
                     billing_details: {
-                        email: hrInfo?.hr_email,
+                        email: hrInfo?.email,
                         name: hrInfo?.full_name,
                     },
                 },
             })
         if (confirmError) {
-            console.log(confirmError)
+            toast.error(confirmError)
             setCardError(confirmError.message)
             setProcessing(false)
             return
@@ -89,7 +90,7 @@ const CheckoutForm = ({ selectRate, hrInfo, setIsOpen, setHrInfo }) => {
                 const { data } = await axios.post(`${import.meta.env.VITE_Base_URL}/add-hr`, {
                     full_name: hrInfo.full_name,
                     company_name: hrInfo.company_name,
-                    hr_email: hrInfo.hr_email,
+                    email: hrInfo.email,
                     company_logo: image_url,
                     date_of_birth: hrInfo.date_of_birth,
                     packages_rate: hrInfo.packages_rate,
@@ -100,9 +101,10 @@ const CheckoutForm = ({ selectRate, hrInfo, setIsOpen, setHrInfo }) => {
                 })
                 if (data.insertedId) {
                     // firebase login
-                    await createUser(hrInfo.hr_email, hrInfo.password);
+                    await createUser(hrInfo.email, hrInfo.password);
                     setIsOpen(false);
                     setHrInfo({});
+                    toast.success('Payment successful.')
                     navigate('/');
                 }
 

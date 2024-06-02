@@ -4,6 +4,7 @@ import { Btn, InputDate, InputFiles, InputPass, InputText } from '../../componen
 import { IoCheckmarkDoneCircle } from 'react-icons/io5';
 import useAboutData from '../../hooks/useAboutData';
 import Payment from '../../components/Modals/Payment';
+import { useParams } from 'react-router-dom';
 
 
 const JoinHR = () => {
@@ -12,9 +13,10 @@ const JoinHR = () => {
     const [selectRate, setSelectRate] = useState(0);
     const [isOpen, setIsOpen] = useState(false)
     const [hrInfo, setHrInfo] = useState({})
+    const { amount } = useParams();
     useEffect(() => {
-        setTimeout(() => setSelectRate(15), 1000)
-    }, [])
+        setTimeout(() => setSelectRate(parseInt(amount)), 1000)
+    }, [amount])
 
     const handlePackages = (rate) => {
         setSelectRate(rate);
@@ -24,7 +26,7 @@ const JoinHR = () => {
         e.preventDefault();
         const full_name = e.target.full_name.value;
         const company_name = e.target.company_name.value;
-        const hr_email = e.target.hr_email.value;
+        const email = e.target.email.value;
         const password = e.target.password.value;
         const company_logo = e.target.logo.files[0];
         const date_of_birth = startDate;
@@ -37,7 +39,7 @@ const JoinHR = () => {
         } else if (packages_rate === 15) {
             members = 20;
         }
-        setHrInfo({ full_name, company_name, hr_email, password, company_logo, date_of_birth, packages_rate, members });
+        setHrInfo({ full_name, company_name, email, password, company_logo, date_of_birth, packages_rate, members });
         setIsOpen(true);
     }
 
@@ -107,7 +109,7 @@ const JoinHR = () => {
                     </div>
                     <div className='space-y-2'>
                         <label className='text-secondaryColor'>Email</label>
-                        <InputText type='email' name='hr_email' label='Enter Your Email' disabled={!selectRate} />
+                        <InputText type='email' name='email' label='Enter Your Email' disabled={!selectRate} />
                     </div>
                     <div className='space-y-2'>
                         <label className='text-secondaryColor'>Password</label>
@@ -123,7 +125,7 @@ const JoinHR = () => {
                 </form>
             </div>
             <div>
-                <Payment selectRate={selectRate} isOpen={isOpen} setIsOpen={setIsOpen} hrInfo={hrInfo} setHrInfo={setHrInfo}/>
+                <Payment selectRate={selectRate} isOpen={isOpen} setIsOpen={setIsOpen} hrInfo={hrInfo} setHrInfo={setHrInfo} />
             </div>
         </div>
     );

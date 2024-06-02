@@ -16,11 +16,14 @@ import './css/Navbasr.css';
 import Login from '../Modals/Login';
 import useAuth from '../../hooks/useAuth';
 import NavLoader from '../Spinner/NavLoader';
+import useGetRole from '../../hooks/useGetRole';
 
 const Navbar = () => {
     const { user, userLoader, logOut } = useAuth()
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
+    const [isRole, isRoleLoading] = useGetRole();
+    console.log(isRole, isRoleLoading);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -88,12 +91,14 @@ const Navbar = () => {
                                     display: { xs: 'block', md: 'none' },
                                 }}
                             >
-
+                                {/* small screen nav item start*/}
                                 <MenuItem onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">
                                         <NavLink to={'/'} className='cursor-pointer'>Home</NavLink>
                                     </Typography>
                                 </MenuItem>
+
+
                                 <MenuItem onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">
                                         <NavLink to={'/join_employee'} className='cursor-pointer'>Join as Employee</NavLink>
@@ -104,7 +109,9 @@ const Navbar = () => {
                                         <NavLink to={'/join_hr'} className='cursor-pointer'>Join as HR Manager</NavLink>
                                     </Typography>
                                 </MenuItem>
+                                {/* small screen nav item end*/}
                             </Menu>
+
                         </Box>
                         <Typography
                             variant="h5"
@@ -123,24 +130,53 @@ const Navbar = () => {
                             <Link to={"/"}>SmartCom.</Link>
                         </Typography>
                         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                            {/* large screen nav item start*/}
                             <Button
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
                                 <NavLink to={'/'} className='cursor-pointer'>Home</NavLink>
                             </Button>
-                            <Button
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
-                                <NavLink to={'/join_employee'} className='cursor-pointer'>Join as Employee</NavLink>
-                            </Button>
-                            <Button
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
-                                <NavLink to={'/join_hr'} className='cursor-pointer'>Join as HR Manager</NavLink>
-                            </Button>
+
+                            {/* HR role navbar */}
+                            {
+                                user && !userLoader && isRole === 'HR' && !isRoleLoading ? (
+                                    <>
+                                        <Button
+                                            onClick={handleCloseNavMenu}
+                                            sx={{ my: 2, color: 'white', display: 'block' }}
+                                        >
+                                            <NavLink to={'/assets'} className='cursor-pointer'>Assets</NavLink>
+                                        </Button>
+                                        <Button
+                                            onClick={handleCloseNavMenu}
+                                            sx={{ my: 2, color: 'white', display: 'block' }}
+                                        >
+                                            <NavLink to={'/employee'} className='cursor-pointer'>Employee</NavLink>
+                                        </Button>
+                                    </>
+                                ) : ""
+                            }
+
+                            {/* without login */}
+                            {
+                                !user && <>
+                                    <Button
+                                        onClick={handleCloseNavMenu}
+                                        sx={{ my: 2, color: 'white', display: 'block' }}
+                                    >
+                                        <NavLink to={'/join_employee'} className='cursor-pointer'>Join as Employee</NavLink>
+                                    </Button>
+                                    <Button
+                                        onClick={handleCloseNavMenu}
+                                        sx={{ my: 2, color: 'white', display: 'block' }}
+                                    >
+                                        <NavLink to={`/join_hr/${15}`} className='cursor-pointer'>Join as HR Manager</NavLink>
+                                    </Button>
+                                </>
+                            }
+
+                            {/* large screen nav item end*/}
                         </Box>
 
                         <Box sx={{ flexGrow: 0 }}>

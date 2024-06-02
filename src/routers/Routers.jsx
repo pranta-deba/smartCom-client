@@ -13,8 +13,8 @@ export const router = createBrowserRouter([
                 element: <Home />
             },
             {
-                path: "/join_hr",
-                element: <JoinHR/>
+                path: "/join_hr/:amount",
+                element: <JoinHR />
             },
             // {
             //     path: "/contact",

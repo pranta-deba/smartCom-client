@@ -5,11 +5,13 @@ import { Fragment } from 'react'
 import { FcGoogle } from "react-icons/fc";
 import useAuth from '../../hooks/useAuth';
 import { InputPass, InputText } from '../Input/Input';
-
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
-    const { googleLogin } = useAuth();
+    const { googleLogin, loginUser } = useAuth();
+    const navigate = useNavigate();
 
     const [isOpen, setIsOpen] = useState(false)
     const open = () => {
@@ -18,11 +20,18 @@ const Login = () => {
     const close = () => {
         setIsOpen(false)
     }
-    const handleLogin = (event) => {
+    const handleLogin = async (event) => {
         event.preventDefault();
         const email = event.target.email.value;
         const password = event.target.password.value;
-        console.log({ email: email, password: password });
+        try {
+            await loginUser(email, password);
+            setIsOpen(false);
+            toast.success('Login successful')
+            navigate('/')
+        } catch (error) {
+            toast.error(error.message.split('/')[1].split(')')[0]);
+        }
     };
     const handleGoogleLogin = async () => {
         try {
