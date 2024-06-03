@@ -5,6 +5,8 @@ import JoinHR from "../pages/JoinHR/JoinHR";
 import JoinEmployee from "../pages/JoinEmployee/JoinEmployee";
 import Assets from "../pages/HR/Assets";
 import Employee from "../pages/HR/Employee";
+import Private from "./Private";
+import HrRoute from "./HrRoute";
 
 export const router = createBrowserRouter([
     {
@@ -25,11 +27,11 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/assets",
-                element: <Assets />
+                element: <Private><HrRoute><Assets /></HrRoute></Private>
             },
             {
                 path: "/employee",
-                element: <Employee />
+                element: <Private><HrRoute><Employee /></HrRoute></Private>
             },
         ]
     },

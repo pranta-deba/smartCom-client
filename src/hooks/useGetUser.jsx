@@ -1,15 +1,16 @@
 import { useQuery } from '@tanstack/react-query'
 import useAuth from './useAuth';
-import axios from 'axios';
+import useAxiosSecure from './useAxiosSecure';
 
 const useGetUser = () => {
     const { user, userLoader } = useAuth();
+    const axiosSecure = useAxiosSecure();
 
     const { data: isUser = {}, isPending: isUserLoading } = useQuery({
         queryKey: [user?.email, "isUser"],
         enabled: !userLoader && !!user?.email,
         queryFn: async () => {
-            const { data } = await axios.get(`${import.meta.env.VITE_Base_URL}/users/user/${user?.email}`);
+            const { data } = await axiosSecure.get(`/users/user/${user?.email}`);
             return data;
         }
     })

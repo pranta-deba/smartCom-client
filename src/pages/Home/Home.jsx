@@ -4,6 +4,7 @@ import Packages from "../../components/HomeComponents/Packages";
 import Loader from "../../components/Spinner/Loader";
 import useAuth from "../../hooks/useAuth";
 import useGetRole from "../../hooks/useGetRole";
+import HrHome from "../HR/HrHome";
 const Home = () => {
     const [isRole] = useGetRole();
     const { user, userLoader } = useAuth();
@@ -13,7 +14,7 @@ const Home = () => {
         </div>
     }
     return (
-        <div>
+        <div className="min-h-screen">
             {
                 !user && !isRole ? <>
                     <Banner />
@@ -21,8 +22,15 @@ const Home = () => {
                     <Packages />
                 </> : ""
             }
-            
-        </div>
+
+            {
+                user && isRole === "HR" ? <>
+                    < HrHome />
+                </> : ""
+            }
+
+
+        </div >
     );
 };
 

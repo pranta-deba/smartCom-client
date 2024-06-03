@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
-import axios from 'axios';
+import useAxiosPublic from './useAxiosPublic';
 
 const useAllCompany = () => {
+    const axiosPublic = useAxiosPublic()
 
     const { data: AllCompany = [], isPending } = useQuery({
         queryKey: ["allCompany"],
         queryFn: async () => {
-            const { data } = await axios.get(`${import.meta.env.VITE_Base_URL}/users/company`);
-            console.log(data);
+            const { data } = await axiosPublic.get(`/users/company`);
             return data;
         }
     })
