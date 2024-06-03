@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useRef, useState } from 'react';
-import { Button } from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -145,6 +145,63 @@ const InputDate = ({ startDate, setStartDate, disabled = false }) => {
     )
 }
 
+// select 
+const SelectOption = ({ label = "label", id = "idNo", selectItem = [], borderColor = 'black', name = "name" }) => {
+    const [age, setAge] = useState('');
+
+    const handleChange = (event) => {
+        setAge(event.target.value);
+    };
+    return (
+        <Box sx={{
+            '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                    borderColor: borderColor,
+                },
+                '&:hover fieldset': {
+                    borderColor: borderColor,
+                },
+                '&.Mui-focused fieldset': {
+                    borderColor: borderColor,
+                },
+                '& .MuiInputBase-input': {
+                    color: borderColor,
+                },
+                '&.Mui-disabled fieldset': {
+                    borderColor: '#5D5E59',
+                },
+            },
+            '& .MuiInputLabel-root': {
+                color: borderColor,
+            },
+            '& .MuiInputLabel-root.Mui-focused': {
+                color: borderColor,
+            },
+            '& .Mui-disabled': {
+                color: 'white',
+                borderColor: "#5D5E59",
+            },
+        }}>
+            <FormControl fullWidth>
+                <InputLabel id={id}>{label}</InputLabel>
+                <Select
+                    labelId={id}
+                    id={id}
+                    value={age}
+                    label={label}
+                    onChange={handleChange}
+                    name={name}
+                >
+                    {
+                        selectItem.map((item, index) => {
+                            return <MenuItem key={index} value={item.value}>{item.label}</MenuItem>
+                        })
+                    }
+                </Select>
+            </FormControl>
+        </Box>)
+}
+
 
 
 InputText.propTypes = {
@@ -182,5 +239,12 @@ InputDate.propTypes = {
     setStartDate: PropTypes.func,
     disabled: PropTypes.bool,
 }
+SelectOption.propTypes = {
+    label: PropTypes.string,
+    id: PropTypes.string,
+    selectItem: PropTypes.array,
+    borderColor: PropTypes.string,
+    name: PropTypes.string,
+}
 
-export { InputText, InputPass, Btn, InputFiles, InputDate }
+export { InputText, InputPass, Btn, InputFiles, InputDate, SelectOption }

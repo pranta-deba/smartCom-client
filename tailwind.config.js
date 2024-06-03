@@ -4,6 +4,7 @@ export default {
   theme: {
     colors: {
       primaryColor: "#07332F",
+      primaryColorOpacity: "#07332F61",
       secondaryColor: "#F7A582",
       Black: "#000000",
       White: "#ffffff",
