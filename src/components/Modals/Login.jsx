@@ -2,7 +2,6 @@ import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/re
 import { Button } from '@mui/material';
 import { useState } from 'react'
 import { Fragment } from 'react'
-import { FcGoogle } from "react-icons/fc";
 import useAuth from '../../hooks/useAuth';
 import { InputPass, InputText } from '../Input/Input';
 import toast from 'react-hot-toast';
@@ -10,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
-    const { googleLogin, loginUser } = useAuth();
+    const { loginUser } = useAuth();
     const navigate = useNavigate();
 
     const [isOpen, setIsOpen] = useState(false)
@@ -33,16 +32,6 @@ const Login = () => {
             toast.error(error.message.split('/')[1].split(')')[0]);
         }
     };
-    const handleGoogleLogin = async () => {
-        try {
-            const res = await googleLogin();
-            if (res.user) {
-                setIsOpen(false)
-            }
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
     return (
         <>
             <Button onClick={open} variant="contained" className='!bg-secondaryColor'>
@@ -63,20 +52,8 @@ const Login = () => {
                                 leaveTo="opacity-0 transform-[scale(95%)]"
                             >
                                 <DialogPanel className="w-full max-w-md rounded-xl bg-white/5 border-2  p-6 backdrop-blur-3xl bg-primaryColor">
-                                    <p className="text-sm text-center dark:text-gray-600 text-White">Dont have account?
-                                        <a href="#" rel="noopener noreferrer" className="focus:underline hover:underline"> Sign up here</a>
+                                    <p className="text-xl mb-2 text-center dark:text-gray-600 text-White">Sign In
                                     </p>
-                                    <div className="my-6 space-y-4 text-White">
-                                        <Button onClick={handleGoogleLogin} className="!flex !items-center !justify-center !w-full !p-4 !space-x-4 !rounded-md  !text-White !border-4">
-                                            <FcGoogle size={30} />
-                                            <p>Login with Google</p>
-                                        </Button>
-                                    </div>
-                                    <div className="flex items-center w-full my-4 text-White">
-                                        <hr className="w-full dark:text-gray-600" />
-                                        <p className="px-3 dark:text-gray-600">OR</p>
-                                        <hr className="w-full dark:text-gray-600" />
-                                    </div>
                                     <form onSubmit={handleLogin}>
                                         <div className='flex flex-col justify-center gap-2'>
                                             <InputText type='email' label='Email' name='email' />

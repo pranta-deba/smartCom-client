@@ -29,12 +29,12 @@ const Banner = () => {
                             <p className='text-xs md:text-lg'>Voluptatem ipsa quae ab illo inventore veritatis et <br /> quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia.</p>
                             <div className='flex md:hidden'>
                                 <Button variant="contained" size="small" className='!bg-secondaryColor'>
-                                    Join as HR Manager
+                                    <Link to={"/join_hr/15"}>Join as HR Manager</Link>
                                 </Button>
                             </div>
                             <div className='hidden md:flex'>
                                 <Button variant="contained" size="large" className='!bg-secondaryColor'>
-                                    <Link to={"/join_hr"}>Join as HR Manager</Link>
+                                    <Link to={"/join_hr/15"}>Join as HR Manager</Link>
                                 </Button>
                             </div>
                         </div>
@@ -47,12 +47,12 @@ const Banner = () => {
                             <p className='text-xs md:text-lg'>Voluptatem ipsa quae ab illo inventore veritatis et <br /> quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia.</p>
                             <div className='flex md:hidden'>
                                 <Button variant="contained" size="small" className='!bg-secondaryColor'>
-                                    Join as an Employee
+                                    <Link to={"/join_employer"}>Join as an Employee</Link>
                                 </Button>
                             </div>
                             <div className='hidden md:flex'>
                                 <Button variant="contained" size="large" className='!bg-secondaryColor'>
-                                    Join as an Employee
+                                    <Link to={"/join_employer"}>Join as an Employee</Link>
                                 </Button>
                             </div>
                         </div>

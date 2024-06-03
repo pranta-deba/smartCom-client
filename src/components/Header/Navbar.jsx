@@ -17,13 +17,14 @@ import Login from '../Modals/Login';
 import useAuth from '../../hooks/useAuth';
 import NavLoader from '../Spinner/NavLoader';
 import useGetRole from '../../hooks/useGetRole';
+import useGetUser from '../../hooks/useGetUser';
 
 const Navbar = () => {
     const { user, userLoader, logOut } = useAuth()
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
     const [isRole, isRoleLoading] = useGetRole();
-    console.log(isRole, isRoleLoading);
+    const [isUser, isUserLoading] = useGetUser();
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -59,7 +60,14 @@ const Navbar = () => {
                                 textDecoration: 'none',
                             }}
                         >
-                            <Link to={"/"}>SmartCom.</Link>
+                            {
+                                user && isUser && !isUserLoading ?
+                                    <div className='m-0 p-0 w-20 h-14 overflow-hidden'>
+                                        <Link to={"/"}><img src={isUser?.company_logo} alt="" className='w-28 h-14 object-cover scale-150' /></Link>
+
+                                    </div> :
+                                    <Link to={"/"}>SmartCom.</Link>
+                            }
                         </Typography>
 
                         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -127,7 +135,14 @@ const Navbar = () => {
                                 textDecoration: 'none',
                             }}
                         >
-                            <Link to={"/"}>SmartCom.</Link>
+                            {
+                                user && isUser && !isUserLoading ?
+                                    <div className='m-0 p-0 w-20 h-14 overflow-hidden'>
+                                        <Link to={"/"}><img src={isUser?.company_logo} alt="" className='w-28 h-14 object-cover scale-150' /></Link>
+
+                                    </div> :
+                                    <Link to={"/"}>SmartCom.</Link>
+                            }
                         </Typography>
                         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                             {/* large screen nav item start*/}
@@ -165,7 +180,7 @@ const Navbar = () => {
                                         onClick={handleCloseNavMenu}
                                         sx={{ my: 2, color: 'white', display: 'block' }}
                                     >
-                                        <NavLink to={'/join_employee'} className='cursor-pointer'>Join as Employee</NavLink>
+                                        <NavLink to={'/join_employer'} className='cursor-pointer'>Join as Employee</NavLink>
                                     </Button>
                                     <Button
                                         onClick={handleCloseNavMenu}
@@ -186,7 +201,7 @@ const Navbar = () => {
                                     <Login />
                                 </div>}
                                 {/* user profile */}
-                                {user && <Tooltip title={user?.displayName}>
+                                {user && <Tooltip title={user?.displayName || "Edit Your Profile"}>
                                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                         {user?.photoURL ? <Avatar src={user?.photoURL} /> :
                                             <Avatar alt={user?.displayName} src={"https://i.ibb.co/bj4Wj2F/images.png"} />}

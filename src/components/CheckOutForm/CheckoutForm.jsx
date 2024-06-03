@@ -87,7 +87,7 @@ const CheckoutForm = ({ selectRate, hrInfo, setIsOpen, setHrInfo }) => {
                 const image_url = await imageUpload(hrInfo.company_logo);
 
                 // add user in db
-                const { data } = await axios.post(`${import.meta.env.VITE_Base_URL}/add-hr`, {
+                const { data } = await axios.post(`${import.meta.env.VITE_Base_URL}/users/hr`, {
                     full_name: hrInfo.full_name,
                     company_name: hrInfo.company_name,
                     email: hrInfo.email,
@@ -109,7 +109,7 @@ const CheckoutForm = ({ selectRate, hrInfo, setIsOpen, setHrInfo }) => {
                 }
 
             } catch (err) {
-                console.log(err)
+                toast.error(err.message)
             }
         }
         setProcessing(false)
