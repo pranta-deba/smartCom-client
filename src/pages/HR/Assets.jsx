@@ -12,6 +12,7 @@ import { FaEdit } from "react-icons/fa";
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
+import PropTypes from 'prop-types';
 
 const Assets = () => {
     const [selected, setSelected] = useState('Asset List');
@@ -147,6 +148,25 @@ const Assets = () => {
             toast.error(error.message)
         }
     }
+    // update
+    const handleUpdate = async e => {
+        e.preventDefault();
+        const id = e.target.id.value;
+        const product_name = e.target.product_name.value;
+        const type = e.target.type.value;
+        const quantity = parseInt(e.target.quantity.value);
+        const availability = e.target.availability.value;
+
+        try {
+            const { data } = await axiosSecure.patch(`/assets/${id}`, { product_name, type, quantity, availability });
+            if (data.modifiedCount > 0) {
+                toast.success("Updated successfully");
+                refetch();
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
 
     return (
         <div className="max-w-[1450px] mx-auto min-h-[calc(100vh-68.500px)]">
@@ -253,7 +273,7 @@ const Assets = () => {
                                                                 <p>{item?.added_date ? new Date(item?.added_date).toLocaleDateString() : "Empty"}</p>
                                                             </td>
                                                             <td className="p-3 flex gap-2 flex-col md:flex-row items-center justify-center">
-                                                                <button><FaEdit size={20} /></button>
+                                                                <UpdateModal item={item} handleUpdate={handleUpdate} />
                                                                 <ConfirmModal id={item._id} handleDelete={handleDelete} />
                                                             </td>
                                                         </tr>
@@ -364,6 +384,74 @@ const ConfirmModal = ({ id, handleDelete }) => {
             </Modal>
         </div>
     );
+}
+
+const UpdateModal = ({ item, handleUpdate }) => {
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #07332F',
+        boxShadow: 24,
+        p: 4,
+        borderRadius: 4,
+    };
+
+    return (
+        <div>
+            <button onClick={handleOpen} className="mt-1"><FaEdit size={20} /></button>
+            <Modal
+                keepMounted
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="keep-mounted-modal-title"
+                aria-describedby="keep-mounted-modal-description"
+            >
+                <Box sx={style}>
+                    <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
+                        Update
+                    </Typography>
+                    <div className="flex mt-5">
+                        <form onSubmit={handleUpdate} className="grid grid-cols-1 md:grid-cols-2 gap-2">
+
+                            <InputText name="product_name" borderColor="black" label="Product Name" defaultValue={item['product_name']} />
+                            <input type="text" defaultValue={item._id} hidden name="id" />
+                            <SelectOption selectItem={[
+                                { value: "returnable", label: 'Returnable' },
+                                { value: "non-returnable", label: 'Non-Returnable' }
+                            ]} label="Type" name="type" defaultValue={item['type']} />
+
+                            <InputText name="quantity" borderColor="black" label="Product Quantity" type="number" defaultValue={item['quantity'].toString()} />
+
+                            <SelectOption selectItem={[
+                                { value: "available", label: 'Available' },
+                                { value: "out-of-stock", label: 'Out-Of-Stock' }
+                            ]} label="Availability" name="availability" defaultValue={item['availability']} />
+                            <div className='col-span-2 flex gap-2 items-center'>
+                                <Btn type="submit" bg="primaryColor" text="Update" />
+                            </div>
+                        </form>
+                    </div>
+                </Box>
+            </Modal>
+        </div>
+    );
+}
+
+ConfirmModal.propTypes = {
+    id: PropTypes.string.isRequired,
+    handleDelete: PropTypes.func.isRequired,
+}
+UpdateModal.propTypes = {
+    item: PropTypes.object.isRequired,
+    handleUpdate: PropTypes.func.isRequired,
 }
 
 export default Assets;

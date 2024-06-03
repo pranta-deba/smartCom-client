@@ -11,7 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 
 // input text
-const InputText = ({ name = '', type = 'text', label = "Label", borderColor = "white", textColor = "White", disabled = false }) => {
+const InputText = ({ name = '', type = 'text', label = "Label", borderColor = "white", textColor = "White", disabled = false, defaultValue = '' }) => {
     return (
         <Box
             sx={{
@@ -48,12 +48,12 @@ const InputText = ({ name = '', type = 'text', label = "Label", borderColor = "w
                 },
             }}
                 className={`!text-${textColor}`}
-                required label={label} name={name} type={type} disabled={disabled} />
+                required label={label} name={name} type={type} disabled={disabled} defaultValue={defaultValue} />
         </Box>
     );
 };
 // input password
-const InputPass = ({ name = "password", type = 'password', label = "Password", disabled = false }) => {
+const InputPass = ({ name = "password", type = 'password', label = "Password", disabled = false ,defaultValue=''}) => {
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     return (
@@ -95,6 +95,7 @@ const InputPass = ({ name = "password", type = 'password', label = "Password", d
                     className='!text-White'
                     required
                     disabled={disabled}
+                    defaultValue={defaultValue}
                 />
                 <div onClick={handleClickShowPassword} className='absolute top-4 right-3 text-White cursor-pointer'>
                     {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -146,8 +147,8 @@ const InputDate = ({ startDate, setStartDate, disabled = false }) => {
 }
 
 // select 
-const SelectOption = ({ label = "label", id = "idNo", selectItem = [], borderColor = 'black', name = "name" }) => {
-    const [age, setAge] = useState('');
+const SelectOption = ({ label = "label", id = "idNo", selectItem = [], borderColor = 'black', name = "name" ,defaultValue=''}) => {
+    const [age, setAge] = useState(defaultValue||'');
 
     const handleChange = (event) => {
         setAge(event.target.value);
@@ -191,6 +192,7 @@ const SelectOption = ({ label = "label", id = "idNo", selectItem = [], borderCol
                     label={label}
                     onChange={handleChange}
                     name={name}
+                    defaultValue={defaultValue}
                 >
                     {
                         selectItem.map((item, index) => {
@@ -211,12 +213,14 @@ InputText.propTypes = {
     borderColor: PropTypes.string,
     textColor: PropTypes.string,
     disabled: PropTypes.bool,
+    defaultValue: PropTypes.string,
 };
 InputPass.propTypes = {
     name: PropTypes.string,
     type: PropTypes.string,
     label: PropTypes.string,
     disabled: PropTypes.bool,
+    defaultValue: PropTypes.string,
 };
 Btn.propTypes = {
     text: PropTypes.string,
@@ -245,6 +249,7 @@ SelectOption.propTypes = {
     selectItem: PropTypes.array,
     borderColor: PropTypes.string,
     name: PropTypes.string,
+    defaultValue: PropTypes.string,
 }
 
 export { InputText, InputPass, Btn, InputFiles, InputDate, SelectOption }
