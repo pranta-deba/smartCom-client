@@ -55,7 +55,10 @@ const AssetsCard = ({ item, refetch }) => {
             request_date: new Date(),
             image: item?.image,
             additional_notes: additional_notes,
-            assets_id: item?._id
+            assets_id: item?._id,
+            product_name: item?.product_name,
+            type: item?.type,
+            status: "pending",
         }
         try {
 

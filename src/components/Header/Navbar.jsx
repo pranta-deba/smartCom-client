@@ -140,7 +140,7 @@ const Navbar = () => {
                                     user && !userLoader && isRole === 'EMPLOYEE' && isUser.verified ? (
                                         <MenuItem onClick={handleCloseNavMenu}>
                                             <Typography textAlign="center">
-                                                <NavLink to={'/my_assets'} className='cursor-pointer'>My Assets</NavLink>
+                                                <NavLink to={'/my_assets_request'} className='cursor-pointer'>My Requested</NavLink>
                                             </Typography>
                                         </MenuItem>
                                     ) : ""
@@ -226,7 +226,7 @@ const Navbar = () => {
                                             onClick={handleCloseNavMenu}
                                             sx={{ my: 2, color: 'white', display: 'block' }}
                                         >
-                                            <NavLink to={'/my_assets'} className='cursor-pointer'>My Assets</NavLink>
+                                            <NavLink to={'/my_assets_request'} className='cursor-pointer'>My Requested</NavLink>
                                         </Button>
                                         <Button
                                             onClick={handleCloseNavMenu}

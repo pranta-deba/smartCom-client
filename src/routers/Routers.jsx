@@ -9,6 +9,7 @@ import Private from "./Private";
 import HrRoute from "./HrRoute";
 import EmployeeRoute from "./EmployeeRoute";
 import RequestForAnAssets from "../pages/Employee/RequestForAnAssets";
+import MyAssetsRequest from "../pages/Employee/MyAssetsRequest";
 
 export const router = createBrowserRouter([
     {
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
             {
                 path: "/request_for_an_assets",
                 element: <Private><EmployeeRoute><RequestForAnAssets /></EmployeeRoute></Private>
+            },
+            {
+                path: "/my_assets_request",
+                element: <Private><EmployeeRoute><MyAssetsRequest /></EmployeeRoute></Private>
             },
         ]
     },
