@@ -20,20 +20,20 @@ const Employee = () => {
 
     return (
         <div className="max-w-[1450px] mx-auto min-h-[calc(100vh-68.500px)]">
-            <h1 className="text-4xl text-center font-bold my-3">Management</h1>
+            <h1 className="text-4xl text-center font-bold my-3">Employee Management</h1>
             <div className="flex flex-col md:flex-row gap-2 relative">
                 <div className="min-w-56 p-3 space-y-3 flex flex-col md:min-h-[calc(100vh-140.5px)] shadow-lg rounded-lg sticky top-0 md:h-screen">
-                    <Badge badgeContent={employees.length} color="primary">
+                    <Badge badgeContent={employees.length} color="success">
                         <Button onClick={() => setSelected('My Employee List')} className={selected === 'My Employee List' ? "!bg-secondaryColor !text-Black !w-full" : "!bg-primaryColor !text-White !w-full"}>
                             My Employee List
                         </Button>
                     </Badge>
-                    <Badge badgeContent={0} color="primary">
+                    <Badge badgeContent={0} color="success">
                         <Button onClick={() => setSelected('Add an Employee')} className={selected === 'Add an Employee' ? "!bg-secondaryColor !text-Black !w-full" : "!bg-primaryColor !text-White !w-full"}>
                             Add an Employee
                         </Button>
                     </Badge>
-                    <Badge badgeContent={employee_requests.length} color="primary">
+                    <Badge badgeContent={employee_requests.length} color="success">
                         <Button onClick={() => setSelected('Employee Requests')} className={selected === 'Employee Requests' ? "!bg-secondaryColor !text-Black !w-full" : "!bg-primaryColor !text-White !w-full"}>
                             Employee Requests
                         </Button>

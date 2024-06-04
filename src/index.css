@@ -10,3 +10,8 @@
 .raleway {
     font-family: "Raleway", sans-serif;
 }
+
+body {
+    background: #F1F5F9;
+    min-height: 100vh;
+}

@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Badge, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Btn, InputFiles, InputText, SelectOption } from "../../components/Input/Input";
 import useGetUser from "../../hooks/useGetUser";
@@ -173,9 +173,12 @@ const Assets = () => {
             <h1 className="text-4xl text-center font-bold my-3">Assets Management</h1>
             <div className="flex flex-col md:flex-row gap-2 relative">
                 <div className="min-w-56 p-3 space-y-3 flex flex-col md:min-h-[calc(100vh-140.5px)] shadow-lg rounded-lg md:sticky md:top-0 md:h-screen">
-                    <Button onClick={() => setSelected('Asset List')} className={selected === 'Asset List' ? "!bg-secondaryColor !text-Black" : "!bg-primaryColor !text-White !w-full"}>
-                        Asset List
-                    </Button>
+
+                    <Badge badgeContent={allAssets.length} color="success">
+                        <Button onClick={() => setSelected('Asset List')} className={selected === 'Asset List' ? "!bg-secondaryColor !text-Black !w-full" : "!bg-primaryColor !text-White !w-full"}>
+                            Asset List
+                        </Button>
+                    </Badge>
 
                     <Button onClick={() => setSelected('Add Asset')} className={selected === 'Add Asset' ? "!bg-secondaryColor !text-Black" : "!bg-primaryColor !text-White !w-full"}>
                         Add Asset

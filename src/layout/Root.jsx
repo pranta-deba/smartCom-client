@@ -3,7 +3,7 @@ import Navbar from "../components/Header/Navbar";
 
 const Root = () => {
     return (
-        <div className="bg-[#F1F5F9]">
+        <div>
             <Navbar />
             <div>
                 <Outlet />

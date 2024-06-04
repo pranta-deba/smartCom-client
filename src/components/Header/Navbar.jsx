@@ -61,7 +61,7 @@ const Navbar = () => {
                             }}
                         >
                             {
-                                user && isUser && !isUserLoading ?
+                                user && isUser && !isUserLoading && isUser.verified ?
                                     <div className='m-0 p-0 w-20 h-14 overflow-hidden'>
                                         <Link to={"/"}><img src={isUser?.company_logo} alt="" className='w-28 h-14 object-cover scale-150' /></Link>
 
@@ -105,19 +105,65 @@ const Navbar = () => {
                                         <NavLink to={'/'} className='cursor-pointer'>Home</NavLink>
                                     </Typography>
                                 </MenuItem>
-
-
-                                <MenuItem onClick={handleCloseNavMenu}>
+                                {!user && <MenuItem onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">
                                         <NavLink to={'/join_employee'} className='cursor-pointer'>Join as Employee</NavLink>
                                     </Typography>
-                                </MenuItem>
-                                <MenuItem onClick={handleCloseNavMenu}>
+                                </MenuItem>}
+                                {!user && <MenuItem onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">
                                         <NavLink to={'/join_hr'} className='cursor-pointer'>Join as HR Manager</NavLink>
                                     </Typography>
-                                </MenuItem>
+                                </MenuItem>}
                                 {/* small screen nav item end*/}
+                                {/* HR role */}
+                                {
+                                    user && !userLoader && isRole === 'HR' && !isRoleLoading ? (
+                                        <MenuItem onClick={handleCloseNavMenu}>
+                                            <Typography textAlign="center">
+                                                <NavLink to={'/assets'} className='cursor-pointer'>Assets</NavLink>
+                                            </Typography>
+                                        </MenuItem>
+                                    ) : ""
+                                }
+                                {
+                                    user && !userLoader && isRole === 'HR' && !isRoleLoading ? (
+                                        <MenuItem onClick={handleCloseNavMenu}>
+                                            <Typography textAlign="center">
+                                                <NavLink to={'/employee'} className='cursor-pointer'>Employee</NavLink>
+                                            </Typography>
+                                        </MenuItem>
+                                    ) : ""
+                                }
+                                {/* EMPLOYEE role */}
+                                {
+                                    user && !userLoader && isRole === 'EMPLOYEE' && isUser.verified ? (
+                                        <MenuItem onClick={handleCloseNavMenu}>
+                                            <Typography textAlign="center">
+                                                <NavLink to={'/my_assets'} className='cursor-pointer'>My Assets</NavLink>
+                                            </Typography>
+                                        </MenuItem>
+                                    ) : ""
+                                }
+                                {
+                                    user && !userLoader && isRole === 'EMPLOYEE' && isUser.verified ? (
+                                        <MenuItem onClick={handleCloseNavMenu}>
+                                            <Typography textAlign="center">
+                                                <NavLink to={'/my_team'} className='cursor-pointer'>My Team</NavLink>
+                                            </Typography>
+                                        </MenuItem>
+                                    ) : ""
+                                }
+                                {
+                                    user && !userLoader && isRole === 'EMPLOYEE' && isUser.verified ? (
+                                        <MenuItem onClick={handleCloseNavMenu}>
+                                            <Typography textAlign="center">
+                                                <NavLink to={'/request_for_an_assets'} className='cursor-pointer'>Request for Asset
+                                                </NavLink>
+                                            </Typography>
+                                        </MenuItem>
+                                    ) : ""
+                                }
                             </Menu>
 
                         </Box>
@@ -168,6 +214,32 @@ const Navbar = () => {
                                             sx={{ my: 2, color: 'white', display: 'block' }}
                                         >
                                             <NavLink to={'/employee'} className='cursor-pointer'>Employee</NavLink>
+                                        </Button>
+                                    </>
+                                ) : ""
+                            }
+                            {/* EMPLOYEE role navbar */}
+                            {
+                                user && !userLoader && isRole === 'EMPLOYEE' && isUser.verified ? (
+                                    <>
+                                        <Button
+                                            onClick={handleCloseNavMenu}
+                                            sx={{ my: 2, color: 'white', display: 'block' }}
+                                        >
+                                            <NavLink to={'/my_assets'} className='cursor-pointer'>My Assets</NavLink>
+                                        </Button>
+                                        <Button
+                                            onClick={handleCloseNavMenu}
+                                            sx={{ my: 2, color: 'white', display: 'block' }}
+                                        >
+                                            <NavLink to={'/my_team'} className='cursor-pointer'>My Team</NavLink>
+                                        </Button>
+                                        <Button
+                                            onClick={handleCloseNavMenu}
+                                            sx={{ my: 2, color: 'white', display: 'block' }}
+                                        >
+                                            <NavLink to={'/request_for_an_assets'} className='cursor-pointer'>Request for Asset
+                                            </NavLink>
                                         </Button>
                                     </>
                                 ) : ""
