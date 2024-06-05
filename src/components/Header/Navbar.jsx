@@ -18,6 +18,7 @@ import useAuth from '../../hooks/useAuth';
 import NavLoader from '../Spinner/NavLoader';
 import useGetRole from '../../hooks/useGetRole';
 import useGetUser from '../../hooks/useGetUser';
+import Dropdown from '../DropDown/Dropdown';
 
 const Navbar = () => {
     const { user, userLoader, logOut } = useAuth()
@@ -41,6 +42,25 @@ const Navbar = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    const dropdownItem1 = {
+        "outerNav": { outerNav: 'Assets', to: '/assets' },
+        "innerNav": [
+            { name: 'Assets', to: '/assets' },
+            { name: 'Add Assets', to: '/add_assets' },
+            { name: 'Pending Requests', to: '/pending_requests' },
+            { name: 'All Requests', to: '/all_requests' },
+        ]
+    }
+    const dropdownItem2 = {
+        "outerNav": { outerNav: 'Employee', to: '/employee' },
+        "innerNav": [
+            { name: 'My Employee List', to: '/employee' },
+            { name: 'Add Employee', to: '/add_employee' },
+            { name: 'Employee Requests', to: '/employee_requests' },
+            { name: 'Add Employee', to: '/add_employee' },
+        ]
+    }
 
     if (userLoader) return <NavLoader />
 
@@ -102,45 +122,38 @@ const Navbar = () => {
                                 {/* small screen nav item start*/}
                                 <MenuItem onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">
-                                        <NavLink to={'/'} className='cursor-pointer'>Home</NavLink>
+                                        <NavLink to={'/'} className='cursor-pointer uppercase'>Home</NavLink>
                                     </Typography>
                                 </MenuItem>
                                 {!user && <MenuItem onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">
-                                        <NavLink to={'/join_employee'} className='cursor-pointer'>Join as Employee</NavLink>
+                                        <NavLink to={'/join_employee'} className='cursor-pointer uppercase'>Join as Employee</NavLink>
                                     </Typography>
                                 </MenuItem>}
                                 {!user && <MenuItem onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">
-                                        <NavLink to={'/join_hr'} className='cursor-pointer'>Join as HR Manager</NavLink>
+                                        <NavLink to={'/join_hr'} className='cursor-pointer uppercase'>Join as HR Manager</NavLink>
                                     </Typography>
                                 </MenuItem>}
                                 {/* small screen nav item end*/}
                                 {/* HR role */}
                                 {
                                     user && !userLoader && isRole === 'HR' && !isRoleLoading ? (
-                                        <MenuItem onClick={handleCloseNavMenu}>
-                                            <Typography textAlign="center">
-                                                <NavLink to={'/assets'} className='cursor-pointer'>Assets</NavLink>
-                                            </Typography>
-                                        </MenuItem>
+                                        <Dropdown dropdownItem={dropdownItem1} color='Black' ms='2' />
                                     ) : ""
                                 }
                                 {
                                     user && !userLoader && isRole === 'HR' && !isRoleLoading ? (
-                                        <MenuItem onClick={handleCloseNavMenu}>
-                                            <Typography textAlign="center">
-                                                <NavLink to={'/employee'} className='cursor-pointer'>Employee</NavLink>
-                                            </Typography>
-                                        </MenuItem>
+                                        <Dropdown dropdownItem={dropdownItem2} color='Black' ms='2' />
                                     ) : ""
                                 }
+
                                 {/* EMPLOYEE role */}
                                 {
                                     user && !userLoader && isRole === 'EMPLOYEE' && isUser.verified ? (
                                         <MenuItem onClick={handleCloseNavMenu}>
                                             <Typography textAlign="center">
-                                                <NavLink to={'/my_assets_request'} className='cursor-pointer'>My Requested</NavLink>
+                                                <NavLink to={'/my_assets_request'} className='cursor-pointer uppercase'>My Requested</NavLink>
                                             </Typography>
                                         </MenuItem>
                                     ) : ""
@@ -149,7 +162,7 @@ const Navbar = () => {
                                     user && !userLoader && isRole === 'EMPLOYEE' && isUser.verified ? (
                                         <MenuItem onClick={handleCloseNavMenu}>
                                             <Typography textAlign="center">
-                                                <NavLink to={'/my_team'} className='cursor-pointer'>My Team</NavLink>
+                                                <NavLink to={'/my_team'} className='cursor-pointer uppercase'>My Team</NavLink>
                                             </Typography>
                                         </MenuItem>
                                     ) : ""
@@ -158,7 +171,7 @@ const Navbar = () => {
                                     user && !userLoader && isRole === 'EMPLOYEE' && isUser.verified ? (
                                         <MenuItem onClick={handleCloseNavMenu}>
                                             <Typography textAlign="center">
-                                                <NavLink to={'/request_for_an_assets'} className='cursor-pointer'>Request for Asset
+                                                <NavLink to={'/request_for_an_assets'} className='cursor-pointer uppercase'>Request for Asset
                                                 </NavLink>
                                             </Typography>
                                         </MenuItem>
@@ -203,18 +216,8 @@ const Navbar = () => {
                             {
                                 user && !userLoader && isRole === 'HR' && !isRoleLoading ? (
                                     <>
-                                        <Button
-                                            onClick={handleCloseNavMenu}
-                                            sx={{ my: 2, color: 'white', display: 'block' }}
-                                        >
-                                            <NavLink to={'/assets'} className='cursor-pointer'>Assets</NavLink>
-                                        </Button>
-                                        <Button
-                                            onClick={handleCloseNavMenu}
-                                            sx={{ my: 2, color: 'white', display: 'block' }}
-                                        >
-                                            <NavLink to={'/employee'} className='cursor-pointer'>Employee</NavLink>
-                                        </Button>
+                                        <Dropdown dropdownItem={dropdownItem1} color='White' />
+                                        <Dropdown dropdownItem={dropdownItem2} color='White' />
                                     </>
                                 ) : ""
                             }

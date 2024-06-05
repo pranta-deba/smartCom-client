@@ -9,11 +9,12 @@ import { MdCancel } from "react-icons/md";
 import { IoPrintSharp } from "react-icons/io5";
 import { pdf } from '@react-pdf/renderer';
 import MyDocument from '../../components/Pdf/MyDocument';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import Loader from '../../components/Spinner/Loader';
 import { GiReturnArrow } from "react-icons/gi";
 import { IoCheckmarkDone } from "react-icons/io5";
+import toast from 'react-hot-toast';
 
 
 const MyAssetsRequest = () => {
@@ -22,6 +23,13 @@ const MyAssetsRequest = () => {
     const axiosSecure = useAxiosSecure();
     const [pdfLoader, setPdfLoader] = useState(false);
     const [assetId, setAssetId] = useState('');
+    const [uiLoader, setUiLoader] = useState(true);
+    const [requests, setRequests] = useState([]);
+
+    useEffect(() => {
+        setRequests(requested_assets);
+        setUiLoader(false)
+    }, [requested_assets])
 
     const handleGetAsset = async id => {
         setAssetId(id);
@@ -36,64 +44,52 @@ const MyAssetsRequest = () => {
         window.open(blobUrl);
     };
 
+    const handleCancel = id => {
+        console.log(id);
+    }
+
     // search
-    //   const handleSearch = async e => {
-    //     setUiLoader(true);
-    //     e.preventDefault()
-    //     const search = e.target.search.value;
-    //     try {
-    //         const { data } = await axiosSecure.get(`/assets-search?search=${search}`);
-    //         setAssets(data);
-    //         setUiLoader(false)
-    //     } catch (error) {
-    //         toast.error(error.message)
-    //     }
-    // }
+    const handleSearch = async e => {
+        setUiLoader(true);
+        e.preventDefault()
+        const search = e.target.search.value;
+        try {
+            const { data } = await axiosSecure.get(`/request-search?search=${search}`);
+            setRequests(data);
+            setUiLoader(false)
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
 
     // filter
-    // const handleFilter = e => {
-    //     setUiLoader(true);
-    //     const filter = e.target.value;
-    //     if (filter == 0) {
-    //         setAssets([])
-    //         setTimeout(() => {
-    //             setAssets(allAssets)
-    //             setUiLoader(false);
-    //         }, 500);
-    //     }
-    //     if (filter === "available") {
-    //         const filtered = allAssets.filter(asset => asset.availability === "available");
-    //         setAssets([]);
-    //         setTimeout(() => {
-    //             setAssets(filtered)
-    //             setUiLoader(false);
-    //         }, 500);
-    //     }
-    //     if (filter === "out-of-stock") {
-    //         const filtered = allAssets.filter(asset => asset.availability === "out-of-stock");
-    //         setAssets([]);
-    //         setTimeout(() => {
-    //             setAssets(filtered)
-    //             setUiLoader(false);
-    //         }, 500);
-    //     }
-    //     if (filter === "returnable") {
-    //         const filtered = allAssets.filter(asset => asset.type === "returnable");
-    //         setAssets([]);
-    //         setTimeout(() => {
-    //             setAssets(filtered)
-    //             setUiLoader(false);
-    //         }, 500);
-    //     }
-    //     if (filter === "non-returnable") {
-    //         const filtered = allAssets.filter(asset => asset.type === "non-returnable");
-    //         setAssets([]);
-    //         setTimeout(() => {
-    //             setAssets(filtered)
-    //             setUiLoader(false);
-    //         }, 500);
-    //     }
-    // }
+    const handleFilter = e => {
+        setUiLoader(true);
+        const filter = e.target.value;
+        if (filter == 0) {
+            setRequests([])
+            setTimeout(() => {
+                setRequests(requested_assets)
+                setUiLoader(false);
+            }, 500);
+        }
+        if (filter === "returnable") {
+            const filtered = requested_assets.filter(asset => asset.type === "returnable");
+            setRequests([]);
+            setTimeout(() => {
+                setRequests(filtered)
+                setUiLoader(false);
+            }, 500);
+        }
+        if (filter === "non-returnable") {
+            const filtered = requested_assets.filter(asset => asset.type === "non-returnable");
+            setRequests([]);
+            setTimeout(() => {
+                setRequests(filtered)
+                setUiLoader(false);
+            }, 500);
+        }
+    }
     return (
         <div>
             <div>
@@ -119,16 +115,14 @@ const MyAssetsRequest = () => {
             </div>
             <div className='max-w-[1450px] mx-auto my-4 px-4'>
                 <div className="flex justify-end items-center">
-                    <form className="flex">
+                    <form onSubmit={handleSearch} className="flex">
                         <div className="flex flex-wrap items-center gap-4">
                             <div className="flex flex-wrap flex-grow gap-4">
                                 <div className="flex-grow">
                                     <input className="input focus:border-transparent w-full md:w-auto" placeholder="Search" name="search" required />
                                 </div>
-                                <select className="select focus:border-transparent w-full md:w-auto">
+                                <select onChange={handleFilter} className="select focus:border-transparent w-full md:w-auto">
                                     <option value={0}>Filter</option>
-                                    <option value={'available'}>available</option>
-                                    <option value={'out-of-stock'}>out-of-stock</option>
                                     <option value={'returnable'}>returnable</option>
                                     <option value={'non-returnable'}>non-returnable</option>
                                 </select>
@@ -166,7 +160,7 @@ const MyAssetsRequest = () => {
                                 </thead>
                                 <tbody>
                                     {
-                                        requested_assets.map((item, idx) => (
+                                        requests.map((item, idx) => (
                                             <tr key={item?._id} className="border-b border-opacity-20 border-gray-700 dark:border-gray-300 bg-gray-900 dark:bg-gray-50">
                                                 <td className="p-3 text-center">
                                                     <p>{idx + 1}</p>
@@ -189,11 +183,11 @@ const MyAssetsRequest = () => {
                                                     ${item?.status === "returned" ? "text-primaryColor" : ""}
                                                      flex justify-center`}>
                                                         {item?.status === "approved" ? <IoCheckmarkDone size={20} /> : item?.status}
-                                                        </p>
+                                                    </p>
                                                 </td>
 
                                                 <td className="p-3 text-center flex justify-center items-center gap-2">
-                                                    {item?.status === "pending" && <button title='Cancel' className='bg-Red text-White rounded-full cursor-pointer'><MdCancel size={22} /></button>}
+                                                    {item?.status === "pending" && <button onClick={() => handleCancel(item._id)} title='Cancel' className='bg-Red text-White rounded-full cursor-pointer'><MdCancel size={22} /></button>}
 
                                                     {item?.status === "approved" && item?.type === "returnable" && <button title='Return' className='cursor-pointer'><GiReturnArrow size={22} /></button>}
 
@@ -219,6 +213,13 @@ const MyAssetsRequest = () => {
                             </table>
                         </div>
                     </div>
+                    {uiLoader && <div className="animate-pulse">
+                        <div className="h-12 bg-primaryColorOpacity mt-3 mb-6 rounded"></div>
+                        <div className="h-12 bg-primaryColorOpacity mb-6 rounded"></div>
+                        <div className="h-12 bg-primaryColorOpacity mb-6 rounded"></div>
+                        <div className="h-12 bg-primaryColorOpacity mb-6 rounded"></div>
+                        <div className="h-12 bg-primaryColorOpacity mb-6 rounded"></div>
+                    </div>}
                 </div>
             </div>
         </div>

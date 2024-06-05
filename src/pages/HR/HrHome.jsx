@@ -37,24 +37,24 @@ const HrHome = () => {
             </div>
             <div className="max-w-[1450px] mx-auto md:min-h-[calc(100vh-68.500px)] my-4">
                 <div className="flex flex-col lg:flex-row gap-8 relative">
-                    <div className="min-w-56 p-4 space-y-3 flex flex-col md:min-h-[calc(100vh-140.5px)] shadow-lg rounded-lg">
-                        <Button onClick={() => setSelected('Dashboard')} className={selected === 'Dashboard' ? "!bg-secondaryColor !text-Black" : "!bg-primaryColor !text-White !w-full"}>
+                    <div className="min-w-56 p-4 space-y-3 flex flex-col md:min-h-[calc(100vh-140.5px)] shadow-lg rounded-lg !text-xs">
+                        <Button onClick={() => setSelected('Dashboard')} className={selected === 'Dashboard' ? "!bg-secondaryColor !text-Black !text-[8px]" : "!bg-primaryColor !text-[8px] !text-White !w-full"}>
                             Dashboard
                         </Button>
 
-                        <Button onClick={() => setSelected('Pending requests')} className={selected === 'Pending requests' ? "!bg-secondaryColor !text-Black" : "!bg-primaryColor !text-White !w-full"}>
+                        <Button onClick={() => setSelected('Pending requests')} className={selected === 'Pending requests' ? "!bg-secondaryColor !text-[8px] !text-Black" : "!bg-primaryColor !text-[8px] !text-White !w-full"}>
                             Pending requests
                         </Button>
 
-                        <Button onClick={() => setSelected('All Requests')} className={selected === 'All Requests' ? "!bg-secondaryColor !text-Black" : "!bg-primaryColor !text-White !w-full"}>All
+                        <Button onClick={() => setSelected('All Requests')} className={selected === 'All Requests' ? "!bg-secondaryColor !text-[8px] !text-Black" : "!bg-primaryColor !text-[8px] !text-White !w-full"}>All
                             Requests
                         </Button>
 
-                        <Button onClick={() => setSelected('Requests List')} className={selected === 'Requests List' ? "!bg-secondaryColor !text-Black" : "!bg-primaryColor !text-White !w-full"}>
+                        <Button onClick={() => setSelected('Requests List')} className={selected === 'Requests List' ? "!bg-secondaryColor !text-[8px] !text-Black" : "!bg-primaryColor !text-[8px] !text-White !w-full"}>
                             Requests List
                         </Button>
 
-                        <Button onClick={() => setSelected('Add Employee')} className={selected === 'Add Employee' ? "!bg-secondaryColor !text-Black" : "!bg-primaryColor !text-White !w-full"}>Add Employee</Button>
+                        <Button onClick={() => setSelected('Add Employee')} className={selected === 'Add Employee' ? "!bg-secondaryColor !text-[8px] !text-Black" : "!bg-primaryColor !text-[8px] !text-White !w-full"}>Add Employee</Button>
                     </div>
 
                     <div className="flex-1 h-full min-w-56 p-3 space-y-3 flex flex-col min-h-[calc(100vh-140.5px)] shadow-lg rounded-lg">

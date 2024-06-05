@@ -28,7 +28,7 @@ const Home = () => {
             }
 
             {
-                user && isRole === "HR" ? <>
+                user && isUser.verified && isRole === "HR" ? <>
                     < HrHome />
                 </> : ""
             }
@@ -40,7 +40,7 @@ const Home = () => {
             }
 
             {
-                user && isUser.verified && <>
+                user && isUser.verified && isRole === "EMPLOYEE" && <>
                     <EmployeeHome isUser={isUser} />
                 </>
             }

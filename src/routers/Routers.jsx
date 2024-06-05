@@ -10,6 +10,10 @@ import HrRoute from "./HrRoute";
 import EmployeeRoute from "./EmployeeRoute";
 import RequestForAnAssets from "../pages/Employee/RequestForAnAssets";
 import MyAssetsRequest from "../pages/Employee/MyAssetsRequest";
+import MyTeam from "../pages/Employee/MyTeam";
+import AddAssets from "../pages/HR/AddAssets";
+import EmployeeRequest from "../pages/HR/EmployeeRequest";
+import PendingRequest from "../pages/Employee/PendingRequest";
 
 export const router = createBrowserRouter([
     {
@@ -33,8 +37,20 @@ export const router = createBrowserRouter([
                 element: <Private><HrRoute><Assets /></HrRoute></Private>
             },
             {
+                path: "/add_assets",
+                element: <Private><HrRoute><AddAssets /></HrRoute></Private>
+            },
+            {
+                path: "/pending_requests",
+                element: <Private><HrRoute><PendingRequest /></HrRoute></Private>
+            },
+            {
                 path: "/employee",
                 element: <Private><HrRoute><Employee /></HrRoute></Private>
+            },
+            {
+                path: "/employee_requests",
+                element: <Private><HrRoute><EmployeeRequest /></HrRoute></Private>
             },
             {
                 path: "/request_for_an_assets",
@@ -43,6 +59,10 @@ export const router = createBrowserRouter([
             {
                 path: "/my_assets_request",
                 element: <Private><EmployeeRoute><MyAssetsRequest /></EmployeeRoute></Private>
+            },
+            {
+                path: "/my_team",
+                element: <Private><EmployeeRoute><MyTeam /></EmployeeRoute></Private>
             },
         ]
     },
