@@ -17,6 +17,7 @@ import useAuth from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { Helmet } from 'react-helmet-async';
 const style = {
     position: 'absolute',
     top: '50%',
@@ -79,6 +80,7 @@ const JoinEmployee = () => {
     const handleChange = (event) => {
         setCompany(event.target.value);
     };
+    
     const handleEmployeeRequest = async e => {
         setProcessing(true)
         e.preventDefault();
@@ -99,7 +101,7 @@ const JoinEmployee = () => {
 
             if (data.insertedId) {
                 await createUser(email, password)
-                toast.success('Successfully, please contact your company administrator.')
+                toast.success('Successfully join.');
                 navigate('/')
                 setProcessing(false)
             }
@@ -123,11 +125,12 @@ const JoinEmployee = () => {
                     email: user?.email,
                     date_of_birth: null,
                     company_name: company,
-                    company_logo
+                    company_logo,
+                    profile: user?.photoURL
                 })
 
                 if (data.insertedId) {
-                    toast.success('Successfully, please contact your company administrator.')
+                    toast.success('Successfully join.')
                     navigate('/')
                     setProcessing(false)
                 }
@@ -141,7 +144,10 @@ const JoinEmployee = () => {
 
     }
     return (
-        <div style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.9)), url(${banner})` }} className="bg-cover bg-no-repeat min-h-[calc(100vh-68.500px)] flex justify-center items-center text-White py-4 px-4 md:px-0">
+        <div style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.9)), url(${banner})` }} className="bg-cover bg-no-repeat flex justify-center items-center text-White py-4 px-4 md:px-0 min-h-[calc(100vh-132.469px)]">
+            <Helmet>
+                <title>Join Employee</title>
+            </Helmet>
             <div>
                 <h1 className='text-center text-4xl font-bold'>Joining Employee</h1>
                 <div className="my-6 space-y-4 text-White">

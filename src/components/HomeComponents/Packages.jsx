@@ -15,7 +15,7 @@ const Packages = () => {
                         {
                             packages.map(item => (
                                 <div key={item?.type} className={`flex w-full mb-8 sm:px-4 md:w-1/2 lg:w-1/3 lg:mb-0 rounded-2xl ${item?.type === 'Pro' ? "bg-primaryColor text-White" : ""}`}>
-                                    <div className="flex flex-grow flex-col p-6 space-y-6 rounded shadow sm:p-8 dark:bg-gray-50">
+                                    <div className="flex flex-grow flex-col p-6 space-y-6 rounded shadow sm:p-8 dark:bg-gray-50 text-center md:text-start">
                                         <div className="space-y-2">
                                             <h4 className={`text-xl font-bold ${item?.type === 'Pro' ? "!text-White" : "text-primaryColor"}`}>{item?.type}</h4>
                                             <span className={`text-6xl font-bold ${item?.type === 'Pro' ? "!text-White" : "text-primaryColor"}`}>${item?.amount}</span>

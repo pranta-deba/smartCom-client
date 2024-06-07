@@ -15,11 +15,12 @@ import Loader from '../../components/Spinner/Loader';
 import { GiReturnArrow } from "react-icons/gi";
 import { IoCheckmarkDone } from "react-icons/io5";
 import toast from 'react-hot-toast';
+import { Helmet } from 'react-helmet-async';
 
 
 const MyAssetsRequest = () => {
     const [isUser] = useGetUser()
-    const [requested_assets] = useGetAllRequested();
+    const [requested_assets, , refetch] = useGetAllRequested();
     const axiosSecure = useAxiosSecure();
     const [pdfLoader, setPdfLoader] = useState(false);
     const [assetId, setAssetId] = useState('');
@@ -44,8 +45,20 @@ const MyAssetsRequest = () => {
         window.open(blobUrl);
     };
 
-    const handleCancel = id => {
+    const handleCancel = async id => {
+        const { data } = await axiosSecure.delete(`/request/cancel/${id}`);
+        if (data.deletedCount > 0) {
+            toast.success("Cancelled")
+            refetch();
+        }
+    }
+    const handleReturn = async id => {
         console.log(id);
+        const { data } = await axiosSecure.put(`/request/return/${id}`);
+        if (data.modifiedCount > 0) {
+            toast.success("Returned successfully")
+            refetch();
+        }
     }
 
     // search
@@ -91,7 +104,10 @@ const MyAssetsRequest = () => {
         }
     }
     return (
-        <div>
+        <div className='min-h-[calc(100vh-132.469px)]'>
+            <Helmet>
+                <title>My Request</title>
+            </Helmet>
             <div>
                 <Swiper
                     pagination={{
@@ -119,7 +135,7 @@ const MyAssetsRequest = () => {
                         <div className="flex flex-wrap items-center gap-4">
                             <div className="flex flex-wrap flex-grow gap-4">
                                 <div className="flex-grow">
-                                    <input className="input focus:border-transparent w-full md:w-auto" placeholder="Search" name="search" required />
+                                    <input className="input focus:border-transparent w-full md:w-auto" placeholder="search items by names" name="search" required />
                                 </div>
                                 <select onChange={handleFilter} className="select focus:border-transparent w-full md:w-auto">
                                     <option value={0}>Filter</option>
@@ -175,7 +191,7 @@ const MyAssetsRequest = () => {
                                                     <p>{item?.request_date ? new Date(item?.request_date).toLocaleDateString() : "Empty"}</p>
                                                 </td>
                                                 <td className="p-3 text-center">
-                                                    <p>{item?.approval_date ? item?.approval_date : "Not approved"}</p>
+                                                    <p>{item?.approval_date ? new Date(item?.approval_date).toLocaleDateString() : "Not approved"}</p>
                                                 </td>
                                                 <td className="p-3 text-center">
                                                     <p className={`${item?.status === "approved" ? "text-success" : ""}
@@ -189,7 +205,7 @@ const MyAssetsRequest = () => {
                                                 <td className="p-3 text-center flex justify-center items-center gap-2">
                                                     {item?.status === "pending" && <button onClick={() => handleCancel(item._id)} title='Cancel' className='bg-Red text-White rounded-full cursor-pointer'><MdCancel size={22} /></button>}
 
-                                                    {item?.status === "approved" && item?.type === "returnable" && <button title='Return' className='cursor-pointer'><GiReturnArrow size={22} /></button>}
+                                                    {item?.status === "approved" && item?.type === "returnable" && item?.status !== "returned" && <button onClick={() => handleReturn(item._id)} title='Return' className='cursor-pointer'><GiReturnArrow size={22} /></button>}
 
                                                     {
                                                         pdfLoader && assetId === item.assets_id ?
@@ -198,8 +214,8 @@ const MyAssetsRequest = () => {
                                                             </>
                                                             :
                                                             <>
-                                                                {item?.status === "approved" &&
-                                                                    <button title='print' onClick={() => handleGetAsset(item.assets_id)} className='cursor-pointer text-primaryColor'><IoPrintSharp size={22} /></button>
+                                                                {item?.status === "approved" || item?.status === "returned" ?
+                                                                    <button title='print' onClick={() => handleGetAsset(item.assets_id)} className='cursor-pointer text-primaryColor'><IoPrintSharp size={22} /></button> : ""
                                                                 }
                                                             </>
                                                     }

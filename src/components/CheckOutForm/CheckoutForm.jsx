@@ -24,10 +24,12 @@ const CheckoutForm = ({ selectRate, hrInfo, setIsOpen, setHrInfo }) => {
             getClientSecret({ price: selectRate })
         }
     }, [selectRate])
+
     const getClientSecret = async (price) => {
         const { data } = await axios.post(`${import.meta.env.VITE_Base_URL}/create-payment-intent`, price);
         setClientSecret(data.clientSecret);
     }
+
     const handleSubmit = async (event) => {
         // Block native form submission.
         event.preventDefault();
@@ -106,6 +108,12 @@ const CheckoutForm = ({ selectRate, hrInfo, setIsOpen, setHrInfo }) => {
                     setHrInfo({});
                     toast.success('Payment successful.')
                     navigate('/');
+                }
+                if (data.modifiedCount > 0) {
+                    setIsOpen(false);
+                    setHrInfo({});
+                    toast.success('Payment successful.')
+                    event.target.reset();
                 }
 
             } catch (err) {

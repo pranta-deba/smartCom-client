@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import useAllAssets from "../../hooks/useAllAssets";
 import useGetUser from "../../hooks/useGetUser";
 import CompanyHeader from "../../components/CompanyHeader/CompanyHeader";
+import { Helmet } from "react-helmet-async";
 
 const AddAssets = () => {
     const [processing, setProcessing] = useState(false);
@@ -38,7 +39,10 @@ const AddAssets = () => {
         }
     }
     return (
-        <div>
+        <div className="min-h-[calc(100vh-132.469px)]">
+            <Helmet>
+                <title>Add Assets</title>
+            </Helmet>
             <div>
                 <CompanyHeader />
             </div>
@@ -56,7 +60,18 @@ const AddAssets = () => {
                             { value: "non-returnable", label: 'Non-Returnable' }
                         ]} label="Type" name="type" />
 
-                        <InputText name="quantity" borderColor="black" label="Product Quantity" type="number" />
+                        <SelectOption selectItem={[
+                            { value: 1, label: '1' },
+                            { value: 2, label: '2' },
+                            { value: 3, label: '3' },
+                            { value: 4, label: '4' },
+                            { value: 5, label: '5' },
+                            { value: 6, label: '6' },
+                            { value: 7, label: '7' },
+                            { value: 8, label: '8' },
+                            { value: 9, label: '9' },
+                            { value: 10, label: '10' },
+                        ]} label="Quantity" name="quantity" />
 
                         <SelectOption selectItem={[
                             { value: "available", label: 'Available' },

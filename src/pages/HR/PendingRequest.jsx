@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import useGetAllPendingRequested from "../../hooks/useGetAllPendingRequested";
 import { IoCheckmarkDone } from "react-icons/io5";
 import useGetUser from "../../hooks/useGetUser";
+import { Helmet } from "react-helmet-async";
 
 const PendingRequest = () => {
     const [uiLoader, setUiLoader] = useState(true);
@@ -42,12 +43,22 @@ const PendingRequest = () => {
             toast.error(error.message)
         }
     }
-    const handleReject = id => {
-        console.log(id);
+    const handleReject = async id => {
+        try {
+            const { data } = await axiosSecure.patch(`/request/rejected/${id}`);
+            if (data.modifiedCount > 0) {
+                refetch();
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
     }
 
     return (
-        <div>
+        <div className="min-h-[calc(100vh-132.469px)]">
+             <Helmet>
+                <title>Pending Request</title>
+            </Helmet>
             <div>
                 <CompanyHeader />
             </div>

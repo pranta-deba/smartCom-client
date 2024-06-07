@@ -13,7 +13,8 @@ import MyAssetsRequest from "../pages/Employee/MyAssetsRequest";
 import MyTeam from "../pages/Employee/MyTeam";
 import AddAssets from "../pages/HR/AddAssets";
 import EmployeeRequest from "../pages/HR/EmployeeRequest";
-import PendingRequest from "../pages/Employee/PendingRequest";
+import PendingRequest from "../pages/HR/PendingRequest";
+import Profile from "../pages/Profile/Profile";
 
 export const router = createBrowserRouter([
     {
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
             {
                 path: "/join_employer",
                 element: <JoinEmployee />
+            },
+            {
+                path: "/profile",
+                element: <Private><Profile/></Private>
             },
             {
                 path: "/assets",

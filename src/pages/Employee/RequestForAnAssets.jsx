@@ -9,6 +9,7 @@ import banner from '../../assets/banner.svg'
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import useGetUser from "../../hooks/useGetUser";
 import AssetsCard from "../../components/Card/AssetsCard";
+import { Helmet } from "react-helmet-async";
 
 const RequestForAnAssets = () => {
     const [uiLoader, setUiLoader] = useState(false);
@@ -82,7 +83,10 @@ const RequestForAnAssets = () => {
     }
 
     return (
-        <div>
+        <div className="min-h-[calc(100vh-132.469px)]">
+             <Helmet>
+                <title>Request For Assets</title>
+            </Helmet>
             <div>
                 <Swiper
                     pagination={{
@@ -111,7 +115,7 @@ const RequestForAnAssets = () => {
                         <div className="flex flex-wrap items-center gap-4">
                             <div className="flex flex-wrap flex-grow gap-4">
                                 <div className="flex-grow">
-                                    <input className="input focus:border-transparent w-full md:w-auto" placeholder="Search" name="search" required />
+                                    <input className="input focus:border-transparent w-full md:w-auto" placeholder="search items by names" name="search" required />
                                 </div>
                                 <select onChange={handleFilter} className="select focus:border-transparent w-full md:w-auto">
                                     <option value={0}>Filter</option>

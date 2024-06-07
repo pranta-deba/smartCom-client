@@ -5,6 +5,7 @@ import { IoCheckmarkDoneCircle } from 'react-icons/io5';
 import useAboutData from '../../hooks/useAboutData';
 import Payment from '../../components/Modals/Payment';
 import { useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 
 const JoinHR = () => {
@@ -44,7 +45,10 @@ const JoinHR = () => {
     }
 
     return (
-        <div style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.9)), url(${banner})` }} className="bg-cover bg-no-repeat min-h-[calc(100vh-68.500px)] flex justify-center items-center text-White py-4 px-4 md:px-0">
+        <div style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.9)), url(${banner})` }} className="bg-cover bg-no-repeat min-h-[calc(100vh-132.469px)] flex justify-center items-center text-White py-4 px-4 md:px-0">
+             <Helmet>
+                <title>Join HR</title>
+            </Helmet>
             <div>
                 <h1 className='text-center text-4xl font-bold'>Choose the plan for you business</h1>
 

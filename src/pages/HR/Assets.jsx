@@ -10,6 +10,7 @@ import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import CompanyHeader from "../../components/CompanyHeader/CompanyHeader";
+import { Helmet } from "react-helmet-async";
 
 const Assets = () => {
     const axiosSecure = useAxiosSecure();
@@ -141,7 +142,10 @@ const Assets = () => {
     }
 
     return (
-        <div>
+        <div className="min-h-[calc(100vh-132.469px)]">
+            <Helmet>
+                <title>Assets</title>
+            </Helmet>
             <div>
                 <CompanyHeader />
             </div>

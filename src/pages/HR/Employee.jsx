@@ -1,9 +1,34 @@
+import toast from "react-hot-toast";
 import CompanyHeader from "../../components/CompanyHeader/CompanyHeader";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useGetAllEmployee from "../../hooks/useGetAllEmployee";
+import useGetUser from "../../hooks/useGetUser";
+import { Helmet } from "react-helmet-async";
+
+
 const Employee = () => {
-    const [employees] = useGetAllEmployee();
+    const [employees, , refetch] = useGetAllEmployee();
+    const axiosSecure = useAxiosSecure();
+    const [isUser] = useGetUser()
+
+    const handleDelete = async id => {
+        try {
+            const { data } = await axiosSecure.delete(`/employee/remove/${id}?company=${isUser.company_name}`);
+            console.log(data);
+            if (data.deletedCount > 0) {
+                toast.success("Employees removed successfully");
+                refetch();
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
     return (
-        <div>
+        <div className="min-h-[calc(100vh-132.469px)]">
+            <Helmet>
+                <title>Employee</title>
+            </Helmet>
             <div>
                 <CompanyHeader />
             </div>
@@ -30,11 +55,10 @@ const Employee = () => {
                                         <thead className="bg-gray-700 dark:bg-gray-300">
                                             <tr className="text-left">
                                                 <th className="p-3">No.</th>
+                                                <th className="p-3">Image</th>
                                                 <th className="p-3">Full Name</th>
                                                 <th className="p-3">Email</th>
-                                                <th className="p-3">Date Of Birth</th>
-                                                <th className="p-3">role</th>
-                                                <th className="p-3">verified</th>
+                                                <th className="p-3">Type</th>
                                                 <th className="p-3">Action</th>
                                             </tr>
                                         </thead>
@@ -46,27 +70,24 @@ const Employee = () => {
                                                             <p>{idx + 1}</p>
                                                         </td>
                                                         <td className="p-3">
+                                                            {item?.profile ? <img src={item?.profile} alt="" className="h-12 w-12 object-cover" /> :
+                                                                <img src='https://i.ibb.co/bb493GZ/blank-user.jpg' alt="" className="h-12 w-12 object-cover" />}
+                                                        </td>
+                                                        <td className="p-3">
                                                             <p>{item?.full_name}</p>
                                                         </td>
                                                         <td className="p-3">
                                                             <p>{item?.email}</p>
                                                         </td>
                                                         <td className="p-3">
-                                                            <p>{item?.date_of_birth ? new Date(item?.date_of_birth).toLocaleDateString() : "Empty"}</p>
-                                                        </td>
-                                                        <td className="p-3">
                                                             <p>{item?.role}</p>
                                                         </td>
                                                         <td className="p-3">
-                                                            <p>{item?.verified ? "Verified" : "Not Verified"}</p>
-                                                        </td>
-                                                        <td className="p-3">
-
+                                                            <button disabled={item.role === "HR"} onClick={() => handleDelete(item._id)} className="bg-Red text-White py-1 px-2 rounded-lg">Remove</button>
                                                         </td>
                                                     </tr>
                                                 ))
                                             }
-
 
                                         </tbody>
                                     </table>

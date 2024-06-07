@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 const NormalPeople = ({ isUser }) => {
     return (
-        <div>
+        <div className='min-h-[calc(100vh-132.469px)]'>
             <div>
                 <Swiper
                     pagination={{

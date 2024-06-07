@@ -68,6 +68,11 @@ const AssetsCard = ({ item, refetch }) => {
                 setOpen(false);
                 refetch();
             }
+            if (res.message) {
+                toast.error(res.message);
+                setOpen(false);
+            }
+            console.log(res);
         } catch (error) {
             toast.error(error.message);
         }

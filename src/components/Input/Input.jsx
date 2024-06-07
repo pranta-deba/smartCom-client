@@ -48,7 +48,7 @@ const InputText = ({ name = '', type = 'text', label = "Label", borderColor = "w
                 },
             }}
                 className={`!text-${textColor}`}
-                required label={label} name={name} type={type} disabled={disabled} defaultValue={defaultValue} />
+                required label={label} name={name} type={type} disabled={disabled} defaultValue={defaultValue}/>
         </Box>
     );
 };

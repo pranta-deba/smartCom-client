@@ -49,16 +49,13 @@ const Navbar = () => {
             { name: 'Assets', to: '/assets' },
             { name: 'Add Assets', to: '/add_assets' },
             { name: 'Pending Requests', to: '/pending_requests' },
-            { name: 'All Requests', to: '/all_requests' },
         ]
     }
     const dropdownItem2 = {
         "outerNav": { outerNav: 'Employee', to: '/employee' },
         "innerNav": [
             { name: 'My Employee List', to: '/employee' },
-            { name: 'Add Employee', to: '/add_employee' },
-            { name: 'Employee Requests', to: '/employee_requests' },
-            { name: 'Add Employee', to: '/add_employee' },
+            { name: 'Add Employee', to: '/employee_requests' },
         ]
     }
 
@@ -83,7 +80,7 @@ const Navbar = () => {
                             {
                                 user && isUser && !isUserLoading && isUser.verified ?
                                     <div className='m-0 p-0 w-20 h-14 overflow-hidden'>
-                                        <Link to={"/"}><img src={isUser?.company_logo} alt="" className='w-28 h-14 object-cover scale-150' /></Link>
+                                        <Link to={"/"}><img src={isUser?.company_logo} alt="" className='w-28 h-14 object-cover scale-150 p-3' /></Link>
 
                                     </div> :
                                     <Link to={"/"}>SmartCom.</Link>
