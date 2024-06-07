@@ -1,12 +1,12 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 const firebaseConfig = {
-  apiKey: "AIzaSyArsKOTyt6Kuh079505A09TvhBTfnMtgbs",
-  authDomain: "smart-com-415d1.firebaseapp.com",
-  projectId: "smart-com-415d1",
-  storageBucket: "smart-com-415d1.appspot.com",
-  messagingSenderId: "991890780225",
-  appId: "1:991890780225:web:6bf3fec83a8ca2a182d6c0",
+  apiKey: import.meta.env.VITE_apiKey,
+  authDomain: import.meta.env.VITE_authDomain,
+  projectId: import.meta.env.VITE_projectId,
+  storageBucket: import.meta.env.VITE_storageBucket,
+  messagingSenderId: import.meta.env.VITE_messagingSenderId,
+  appId: import.meta.env.VITE_appId,
 };
 
 const app = initializeApp(firebaseConfig);
