@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import banner from '../../assets/banner.svg'
 import { Btn, InputDate, InputFiles, InputPass, InputText } from '../../components/Input/Input';
 import { IoCheckmarkDoneCircle } from 'react-icons/io5';
 import useAboutData from '../../hooks/useAboutData';
@@ -45,7 +44,7 @@ const JoinHR = () => {
     }
 
     return (
-        <div style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.9)), url(${banner})` }} className="bg-cover bg-no-repeat min-h-[calc(100vh-132.469px)] flex justify-center items-center text-White py-4 px-4 md:px-0">
+        <div style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.9))` }} className="bg-[#041C1C] bg-cover bg-no-repeat min-h-[calc(100vh-132.469px)] flex justify-center items-center text-White py-4 px-4 md:px-0">
              <Helmet>
                 <title>Join HR</title>
             </Helmet>

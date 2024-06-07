@@ -124,12 +124,12 @@ const Navbar = () => {
                                 </MenuItem>
                                 {!user && <MenuItem onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">
-                                        <NavLink to={'/join_employee'} className='cursor-pointer uppercase'>Join as Employee</NavLink>
+                                        <NavLink to={'/join_employer'} className='cursor-pointer uppercase'>Join as Employee</NavLink>
                                     </Typography>
                                 </MenuItem>}
                                 {!user && <MenuItem onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">
-                                        <NavLink to={'/join_hr'} className='cursor-pointer uppercase'>Join as HR Manager</NavLink>
+                                        <NavLink to={`/join_hr/${15}`} className='cursor-pointer uppercase'>Join as HR Manager</NavLink>
                                     </Typography>
                                 </MenuItem>}
                                 {/* small screen nav item end*/}

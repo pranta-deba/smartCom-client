@@ -31,10 +31,6 @@ const AuthProvider = ({ children }) => {
         return () => unSubscribe();
     }, [axiosPublic])
 
-    console.log('AuthContext: ', user);
-
-
-
     const googleLogin = () => {
         return signInWithPopup(auth, googleProvider);
     }

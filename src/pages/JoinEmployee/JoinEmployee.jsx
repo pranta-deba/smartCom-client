@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import banner from '../../assets/banner.svg'
 import { Btn, InputDate, InputPass, InputText } from '../../components/Input/Input';
 import useAllCompany from '../../hooks/useAllCompany';
 import { Button } from '@mui/material';
@@ -144,7 +143,7 @@ const JoinEmployee = () => {
 
     }
     return (
-        <div style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.9)), url(${banner})` }} className="bg-cover bg-no-repeat flex justify-center items-center text-White py-4 px-4 md:px-0 min-h-[calc(100vh-132.469px)]">
+        <div style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.9))` }} className="bg-cover bg-no-repeat flex justify-center items-center text-White py-4 px-4 md:px-0 min-h-[calc(100vh-132.469px)] bg-[#041C1C]">
             <Helmet>
                 <title>Join Employee</title>
             </Helmet>
