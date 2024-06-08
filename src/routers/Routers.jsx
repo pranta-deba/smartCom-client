@@ -15,10 +15,12 @@ import AddAssets from "../pages/HR/AddAssets";
 import EmployeeRequest from "../pages/HR/EmployeeRequest";
 import PendingRequest from "../pages/HR/PendingRequest";
 import Profile from "../pages/Profile/Profile";
+import Error from "../pages/Error/Error";
 
 export const router = createBrowserRouter([
     {
         path: "/",
+        errorElement: <Error/>,
         element: <Root />,
         children: [
             {
