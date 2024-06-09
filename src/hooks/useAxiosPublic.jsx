@@ -1,6 +1,6 @@
 import axios from "axios";
 const axiosPublic = axios.create({
-    baseURL: "https://smart-com-server.vercel.app"
+    baseURL: "http://localhost:8000"
 })
 const useAxiosPublic = () => {
     return axiosPublic

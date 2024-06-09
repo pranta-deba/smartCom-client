@@ -66,7 +66,7 @@ const theme = createTheme({
 });
 
 const JoinEmployee = () => {
-    const { createUser, googleLogin } = useAuth();
+    const { createUser, googleLogin, updateUser } = useAuth();
     const [startDate, setStartDate] = useState(new Date());
     const [AllCompany] = useAllCompany();
     const [company, setCompany] = useState('');
@@ -79,7 +79,7 @@ const JoinEmployee = () => {
     const handleChange = (event) => {
         setCompany(event.target.value);
     };
-    
+
     const handleEmployeeRequest = async e => {
         setProcessing(true)
         e.preventDefault();
@@ -100,6 +100,7 @@ const JoinEmployee = () => {
 
             if (data.insertedId) {
                 await createUser(email, password)
+                await updateUser(full_name, null)
                 toast.success('Successfully join.');
                 navigate('/')
                 setProcessing(false)

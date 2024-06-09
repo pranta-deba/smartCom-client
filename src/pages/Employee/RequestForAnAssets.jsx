@@ -77,7 +77,7 @@ const RequestForAnAssets = () => {
     }
 
     return (
-        <div className="min-h-[calc(100vh-132.469px)]">
+        <div className="min-h-[calc(100vh-132.469px)] mb-12">
              <Helmet>
                 <title>Request For Assets</title>
             </Helmet>
